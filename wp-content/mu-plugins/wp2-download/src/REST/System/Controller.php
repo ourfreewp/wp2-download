@@ -29,14 +29,22 @@ class Controller {
 				403
 			);
 		}
-		// Delegate to Hub or Health system as needed
-		if ( class_exists( 'WP2\Download\Admin\Hub' ) ) {
-			$hub = \WP2\Download\Admin\Hub::get_instance();
-			return $hub->ajax_run_health_check_rest( $request );
+		// Enqueue individual health check for all registered checks
+		$post_id = $request->get_param( 'post_id' );
+		$runner = \WP2\Download\Services\Locator::get_health_runner();
+		$check_ids = $runner->get_registered_check_ids();
+		foreach ( $check_ids as $check_id ) {
+			if ( function_exists( 'as_enqueue_async_action' ) ) {
+				\WP2\Download\Health\Scheduler::INDIVIDUAL_HOOK;
+				as_enqueue_async_action( \WP2\Download\Health\Scheduler::INDIVIDUAL_HOOK, [ 
+					'check_id' => $check_id,
+					'post_id' => $post_id,
+				], \WP2\Download\Health\Scheduler::ACTION_GROUP );
+			}
 		}
 		return new \WP_REST_Response(
-			[ 'error' => [ 'code' => 'hub_unavailable', 'message' => 'Hub not available' ] ],
-			500
+			[ 'success' => true, 'message' => 'Health check scheduled.' ],
+			200
 		);
 	}
 
@@ -48,13 +56,13 @@ class Controller {
 				403
 			);
 		}
-		if ( class_exists( 'WP2\Download\Admin\Hub' ) ) {
-			$hub = \WP2\Download\Admin\Hub::get_instance();
-			return $hub->ajax_run_all_health_checks_rest( $request );
+		// Enqueue the main Action Scheduler event for all health checks
+		if ( function_exists( 'as_enqueue_async_action' ) ) {
+			as_enqueue_async_action( \WP2\Download\Health\Scheduler::MAIN_HOOK, [], \WP2\Download\Health\Scheduler::ACTION_GROUP );
 		}
 		return new \WP_REST_Response(
-			[ 'error' => [ 'code' => 'hub_unavailable', 'message' => 'Hub not available' ] ],
-			500
+			[ 'success' => true, 'message' => 'Scheduled all health checks.' ],
+			200
 		);
 	}
 }

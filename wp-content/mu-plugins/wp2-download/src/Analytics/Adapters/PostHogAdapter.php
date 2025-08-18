@@ -105,4 +105,14 @@ class PostHogAdapter implements ConnectionInterface {
 			\WP2\Download\Util\Logger::log( 'PostHogAdapter non-2xx: code=' . $code . ' event=' . $event_name . ' body=' . $body_excerpt, 'ERROR' );
 		}
 	}
+
+	/**
+	 * Returns the last error encountered by the adapter.
+	 *
+	 * @return string|null
+	 */
+	public function get_last_error(): ?string {
+		// Implement error tracking if needed
+		return null;
+	}
 }
