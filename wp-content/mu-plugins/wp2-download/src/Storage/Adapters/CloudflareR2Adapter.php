@@ -71,11 +71,11 @@ class CloudflareR2Adapter implements ConnectionInterface {
 	 */
 	public function __construct( array $config = [] ) {
 		// Precedence: constant → env → config
-		$this->account_id = defined('WP2_R2_ACCOUNT_ID') ? WP2_R2_ACCOUNT_ID : (getenv('WP2_R2_ACCOUNT_ID') ?: ($config['account_id'] ?? ''));
-		$this->bucket = defined('WP2_R2_BUCKET') ? WP2_R2_BUCKET : (getenv('WP2_R2_BUCKET') ?: ($config['bucket'] ?? ''));
-		$this->access_key_id = defined('WP2_R2_ACCESS_KEY_ID') ? WP2_R2_ACCESS_KEY_ID : (getenv('WP2_R2_ACCESS_KEY_ID') ?: ($config['access_key_id'] ?? ''));
-		$this->secret_access_key = defined('WP2_R2_SECRET_ACCESS_KEY') ? WP2_R2_SECRET_ACCESS_KEY : (getenv('WP2_R2_SECRET_ACCESS_KEY') ?: ($config['secret_access_key'] ?? ''));
-		$this->endpoint = isset($config['endpoint']) ? (string)$config['endpoint'] : $this->build_endpoint();
+		$this->account_id = defined( 'WP2_R2_ACCOUNT_ID' ) ? WP2_R2_ACCOUNT_ID : ( getenv( 'WP2_R2_ACCOUNT_ID' ) ?: ( $config['account_id'] ?? '' ) );
+		$this->bucket = defined( 'WP2_R2_BUCKET' ) ? WP2_R2_BUCKET : ( getenv( 'WP2_R2_BUCKET' ) ?: ( $config['bucket'] ?? '' ) );
+		$this->access_key_id = defined( 'WP2_R2_ACCESS_KEY_ID' ) ? WP2_R2_ACCESS_KEY_ID : ( getenv( 'WP2_R2_ACCESS_KEY_ID' ) ?: ( $config['access_key_id'] ?? '' ) );
+		$this->secret_access_key = defined( 'WP2_R2_SECRET_ACCESS_KEY' ) ? WP2_R2_SECRET_ACCESS_KEY : ( getenv( 'WP2_R2_SECRET_ACCESS_KEY' ) ?: ( $config['secret_access_key'] ?? '' ) );
+		$this->endpoint = isset( $config['endpoint'] ) ? (string) $config['endpoint'] : $this->build_endpoint();
 		$this->use_public_bucket = (bool) ( $config['public'] ?? false );
 	}
 
@@ -135,5 +135,15 @@ class CloudflareR2Adapter implements ConnectionInterface {
 		$sanitized = ltrim( $key, '/' );
 		// Preserve path separators while encoding.
 		return $base . '/' . str_replace( '%2F', '/', rawurlencode( $sanitized ) );
+	}
+
+	/**
+	 * Returns the last error encountered by the adapter.
+	 *
+	 * @return string|null
+	 */
+	public function get_last_error(): ?string {
+		// Implement error tracking if needed
+		return null;
 	}
 }

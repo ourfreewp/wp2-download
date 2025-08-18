@@ -8,11 +8,19 @@ use WP2\Download\Health\Checks\Github\TagCheck;
 use WP2\Download\Health\Checks\CloudflareR2\ArtifactCheck;
 
 class Init {
+	/**
+	 * Initialize health system and register checks.
+	 */
 	public static function init() {
 		$runner = Locator::get_health_runner();
 		$runner->register_check( new RepoCheck() );
 		$runner->register_check( new TagCheck() );
 		$runner->register_check( new ArtifactCheck() );
-		$runner->register_hooks();
+
+		// Register Scheduler hooks for Action Scheduler integration
+		$scheduler = new \WP2\Download\Health\Scheduler();
+		$scheduler->register_hooks();
+
+		\WP2\Download\Util\Logger::log( 'Health Init: Registered all health checks, scheduler, and hooks.', 'DEBUG' );
 	}
 }

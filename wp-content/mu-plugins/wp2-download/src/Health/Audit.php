@@ -15,14 +15,24 @@ class Audit {
 	public const AUDIT_HOOK = 'wp2_run_package_audit';
 	public const AUDIT_RESULTS_TRANSIENT = 'wp2_package_audit_results';
 
-	public function register_hooks(): void {
+	/**
+	 * Schedule the audit job using Action Scheduler.
+	 */
+	public function schedule_audit(): void {
+		if ( function_exists( 'as_has_scheduled_action' ) && function_exists( 'as_enqueue_async_action' ) ) {
+			if ( ! as_has_scheduled_action( self::AUDIT_HOOK, [], 'wp2-download-audit' ) ) {
+				as_schedule_recurring_action( time(), DAY_IN_SECONDS, self::AUDIT_HOOK, [], 'wp2-download-audit' );
+			}
+		}
 		add_action( self::AUDIT_HOOK, [ $this, 'run_audit' ] );
 	}
 
 	/**
 	 * The main audit job. Runs in the background via Action Scheduler.
+	 * Logs start, completion, and errors.
 	 */
 	public function run_audit(): void {
+		\WP2\Download\Util\Logger::log( 'Audit: Starting audit job.', 'DEBUG' );
 		$manifest_packages = $this->get_packages_from_manifests();
 		$r2_versions = $this->get_all_versions_from_r2();
 		$audit_results = [];
@@ -34,14 +44,25 @@ class Audit {
 			$missing_in_db = array_diff( $cloud_versions, $db_versions );
 
 			if ( ! empty( $missing_in_db ) ) {
+				\WP2\Download\Util\Logger::log( "Audit: Missing in DB for {$slug}: " . implode( ', ', $missing_in_db ), 'WARNING' );
 				$audit_results[ $slug ] = [ 
 					'type' => $package['type'],
 					'missing_versions' => array_values( $missing_in_db ),
+					'db_versions' => $db_versions,
+					'cloud_versions' => $cloud_versions
+				];
+			} else {
+				$audit_results[ $slug ] = [ 
+					'type' => $package['type'],
+					'missing_versions' => [],
+					'db_versions' => $db_versions,
+					'cloud_versions' => $cloud_versions
 				];
 			}
 		}
 
 		set_transient( self::AUDIT_RESULTS_TRANSIENT, $audit_results, HOUR_IN_SECONDS );
+		\WP2\Download\Util\Logger::log( 'Audit: Completed audit job.', 'DEBUG' );
 	}
 
 	/**
