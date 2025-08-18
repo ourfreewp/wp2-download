@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "Patchstack",
+	"slug": "patchstack",
+	"type": "plugin",
+	"version": "auto",
+	"origin": {
+		"type": "wporg",
+		"slug": "patchstack",
+		"subtype": "plugin"
+	},
+	"meta": {
+		"description": "Security monitoring and protections.",
+		"author": "Patchstack"
+	}
+}

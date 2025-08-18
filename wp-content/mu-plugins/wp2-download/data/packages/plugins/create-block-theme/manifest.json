@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "Create Block Theme",
+	"slug": "create-block-theme",
+	"type": "plugin",
+	"version": "auto",
+	"origin": {
+		"type": "wporg",
+		"slug": "create-block-theme",
+		"subtype": "plugin"
+	},
+	"meta": {
+		"description": "Scaffold and export block themes.",
+		"author": "WordPress.org"
+	}
+}

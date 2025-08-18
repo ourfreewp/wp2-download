@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "Twenty Twenty-Five",
+	"slug": "twentytwentyfive",
+	"type": "theme",
+	"version": "1.0",
+	"origin": {
+		"type": "wporg",
+		"slug": "twentytwentyfive",
+		"subtype": "theme"
+	},
+	"meta": {
+		"description": "The default WordPress theme for 2025, designed for flexibility and accessibility.",
+		"author": "WordPress.org"
+	}
+}

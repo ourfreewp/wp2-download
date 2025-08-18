@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "Accessibility Checker",
+	"slug": "accessibility-checker",
+	"type": "plugin",
+	"version": "auto",
+	"origin": {
+		"type": "wporg",
+		"slug": "accessibility-checker",
+		"subtype": "plugin"
+	},
+	"meta": {
+		"description": "Accessibility auditing for WordPress content.",
+		"author": "Equalize Digital"
+	}
+}

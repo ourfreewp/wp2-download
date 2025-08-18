@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "The SEO Framework",
+	"slug": "autodescription",
+	"type": "plugin",
+	"version": "auto",
+	"origin": {
+		"type": "wporg",
+		"slug": "autodescription",
+		"subtype": "plugin"
+	},
+	"meta": {
+		"description": "SEO toolkit for WordPress.",
+		"author": "The SEO Framework Team"
+	}
+}

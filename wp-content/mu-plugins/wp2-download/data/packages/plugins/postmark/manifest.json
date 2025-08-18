@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "Postmark",
+	"slug": "postmark-approved-wordpress-plugin",
+	"type": "plugin",
+	"version": "auto",
+	"origin": {
+		"type": "wporg",
+		"slug": "postmark-approved-wordpress-plugin",
+		"subtype": "plugin"
+	},
+	"meta": {
+		"description": "Postmark email delivery.",
+		"author": "PlotLabs"
+	}
+}

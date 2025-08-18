@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "Health Check & Troubleshooting",
+	"slug": "health-check",
+	"type": "plugin",
+	"version": "auto",
+	"origin": {
+		"type": "wporg",
+		"slug": "health-check",
+		"subtype": "plugin"
+	},
+	"meta": {
+		"description": "Site health tools and troubleshooting.",
+		"author": "The WordPress.org community"
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "Redirection",
+	"slug": "redirection",
+	"type": "plugin",
+	"version": "auto",
+	"origin": {
+		"type": "wporg",
+		"slug": "redirection",
+		"subtype": "plugin"
+	},
+	"meta": {
+		"description": "Manage 301 redirects and track 404s.",
+		"author": "John Godley"
+	}
+}

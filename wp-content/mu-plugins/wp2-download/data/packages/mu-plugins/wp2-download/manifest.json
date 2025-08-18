@@ -1,0 +1,15 @@
+{
+	"$schema": "../../schema.json",
+	"name": "WP2 Download",
+	"slug": "wp2-download",
+	"type": "mu-plugin",
+	"version": "auto",
+	"origin": {
+		"type": "storage",
+		"r2_key": "mu-plugins/wp2-download/wp2-download-{{version}}.zip"
+	},
+	"meta": {
+		"description": "Unified download and package origin handling.",
+		"author": "Web Multipliers"
+	}
+}

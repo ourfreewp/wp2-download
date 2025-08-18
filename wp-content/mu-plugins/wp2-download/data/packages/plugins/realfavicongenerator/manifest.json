@@ -1,0 +1,16 @@
+{
+  "$schema": "../../schema.json",
+  "name": "Favicon by RealFaviconGenerator",
+  "slug": "realfavicongenerator",
+  "type": "plugin",
+  "version": "auto",
+  "origin": {
+    "type": "wporg",
+    "slug": "realfavicongenerator",
+    "subtype": "plugin"
+  },
+  "meta": {
+    "description": "Generate favicons for all platforms.",
+    "author": "RealFaviconGenerator"
+  }
+}

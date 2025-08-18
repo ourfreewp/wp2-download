@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "Blockstudio",
+	"slug": "blockstudio",
+	"type": "plugin",
+	"version": "^4.0.2",
+	"origin": {
+		"type": "composer",
+		"package": "fabrikat/blockstudio",
+		"constraint": "^4.0.2"
+	},
+	"meta": {
+		"description": "Block development toolkit.",
+		"author": "Fabrikat"
+	}
+}

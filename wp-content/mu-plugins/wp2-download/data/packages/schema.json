@@ -1,0 +1,296 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://wp2.dev/schemas/package-manifest-v1.json",
+	"title": "WP2 Package Manifest",
+	"description": "Manifest for WordPress installables with multiple origins.",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"$schema": {
+			"type": "string",
+			"description": "Optional schema reference for tooling."
+		},
+		"name": {
+			"type": "string",
+			"minLength": 1,
+			"description": "Human-friendly name."
+		},
+		"slug": {
+			"type": "string",
+			"pattern": "^[a-z0-9\\-]+$",
+			"minLength": 1,
+			"maxLength": 100,
+			"description": "Canonical identifier used in paths/folders."
+		},
+		"type": {
+			"type": "string",
+			"enum": [
+				"plugin",
+				"theme",
+				"mu-plugin"
+			],
+			"description": "Installable type."
+		},
+		"version": {
+			"type": "string",
+			"minLength": 1,
+			"description": "Concrete version or policy (e.g., 'auto', '^1.2')."
+		},
+		"channels": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"enum": [
+					"stable",
+					"beta",
+					"alpha",
+					"rc"
+				]
+			},
+			"uniqueItems": true,
+			"description": "Optional release channels supported by this package."
+		},
+		"default_channel": {
+			"type": "string",
+			"enum": [
+				"stable",
+				"beta",
+				"alpha",
+				"rc"
+			],
+			"default": "stable",
+			"description": "Channel used when none is specified."
+		},
+		"origin": {
+			"$ref": "#/$defs/origin"
+		},
+		"meta": {
+			"type": "object",
+			"additionalProperties": true,
+			"description": "Free-form metadata for UI (description, author, links, etc.)."
+		}
+	},
+	"required": [
+		"name",
+		"slug",
+		"type",
+		"version",
+		"origin"
+	],
+	"$defs": {
+		"origin-base": {
+			"type": "object",
+			"additionalProperties": true,
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [
+						"storage",
+						"composer",
+						"wporg",
+						"github",
+						"gdrive"
+					],
+					"description": "Origin kind."
+				}
+			},
+			"required": [
+				"type"
+			]
+		},
+		"origin-storage": {
+			"allOf": [
+				{
+					"$ref": "#/$defs/origin-base"
+				},
+				{
+					"properties": {
+						"type": {
+							"const": "storage"
+						},
+						"path": {
+							"type": "string",
+							"minLength": 1,
+							"description": "Object-storage key or local path (e.g., plugins/foo-1.2.3.zip)."
+						},
+						"r2_key": {
+							"type": "string",
+							"minLength": 1,
+							"description": "Alias for storage key when using R2/S3 semantics."
+						}
+					},
+					"anyOf": [
+						{
+							"required": [
+								"path"
+							]
+						},
+						{
+							"required": [
+								"r2_key"
+							]
+						}
+					]
+				}
+			]
+		},
+		"origin-composer": {
+			"allOf": [
+				{
+					"$ref": "#/$defs/origin-base"
+				},
+				{
+					"properties": {
+						"type": {
+							"const": "composer"
+						},
+						"package": {
+							"type": "string",
+							"pattern": "^[a-z0-9._\\-]+\\/[a-z0-9._\\-]+$",
+							"description": "Composer package name (vendor/name)."
+						},
+						"constraint": {
+							"type": "string",
+							"description": "Semver constraint (e.g., ^2.3, 1.x)."
+						},
+						"registry": {
+							"type": "string",
+							"format": "uri",
+							"description": "Optional custom Composer registry URL."
+						}
+					},
+					"required": [
+						"package"
+					]
+				}
+			]
+		},
+		"origin-wporg": {
+			"allOf": [
+				{
+					"$ref": "#/$defs/origin-base"
+				},
+				{
+					"properties": {
+						"type": {
+							"const": "wporg"
+						},
+						"slug": {
+							"type": "string",
+							"pattern": "^[a-z0-9\\-]+$",
+							"description": "wp.org slug."
+						},
+						"subtype": {
+							"type": "string",
+							"enum": [
+								"plugin",
+								"theme"
+							],
+							"description": "Explicit subtype for wp.org context."
+						},
+						"channel": {
+							"type": "string",
+							"enum": [
+								"stable",
+								"beta",
+								"rc",
+								"alpha"
+							],
+							"description": "Preferred channel if available."
+						}
+					},
+					"required": [
+						"slug"
+					]
+				}
+			]
+		},
+		"origin-github": {
+			"allOf": [
+				{
+					"$ref": "#/$defs/origin-base"
+				},
+				{
+					"properties": {
+						"type": {
+							"const": "github"
+						},
+						"repo": {
+							"type": "string",
+							"pattern": "^[A-Za-z0-9_.\\-]+\\/[A-Za-z0-9_.\\-]+$",
+							"description": "owner/repo."
+						},
+						"release": {
+							"type": "string",
+							"description": "Tag or explicit release (e.g., v1.2.3)."
+						},
+						"tag_pattern": {
+							"type": "string",
+							"description": "Tag glob/regex to select latest matching release (e.g., v1.*)."
+						},
+						"asset_pattern": {
+							"type": "string",
+							"description": "Pattern for choosing a release asset (e.g., .*\\.zip)."
+						},
+						"access": {
+							"type": "string",
+							"enum": [
+								"public",
+								"private"
+							],
+							"default": "public"
+						}
+					},
+					"required": [
+						"repo"
+					]
+				}
+			]
+		},
+		"origin-gdrive": {
+			"allOf": [
+				{
+					"$ref": "#/$defs/origin-base"
+				},
+				{
+					"properties": {
+						"type": {
+							"const": "gdrive"
+						},
+						"file_id": {
+							"type": "string",
+							"minLength": 1,
+							"description": "Google Drive file ID."
+						},
+						"license_key_required": {
+							"type": "boolean",
+							"default": false
+						}
+					},
+					"required": [
+						"file_id"
+					]
+				}
+			]
+		},
+		"origin": {
+			"oneOf": [
+				{
+					"$ref": "#/$defs/origin-storage"
+				},
+				{
+					"$ref": "#/$defs/origin-composer"
+				},
+				{
+					"$ref": "#/$defs/origin-wporg"
+				},
+				{
+					"$ref": "#/$defs/origin-github"
+				},
+				{
+					"$ref": "#/$defs/origin-gdrive"
+				}
+			]
+		}
+	}
+}

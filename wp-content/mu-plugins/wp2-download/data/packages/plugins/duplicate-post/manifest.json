@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "Duplicate Post",
+	"slug": "duplicate-post",
+	"type": "plugin",
+	"version": "auto",
+	"origin": {
+		"type": "wporg",
+		"slug": "duplicate-post",
+		"subtype": "plugin"
+	},
+	"meta": {
+		"description": "Clone posts and pages.",
+		"author": "Yoast"
+	}
+}

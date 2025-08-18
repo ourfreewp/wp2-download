@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "Fathom Analytics",
+	"slug": "fathom-analytics",
+	"type": "plugin",
+	"version": "auto",
+	"origin": {
+		"type": "wporg",
+		"slug": "fathom-analytics",
+		"subtype": "plugin"
+	},
+	"meta": {
+		"description": "Privacy-first analytics integration.",
+		"author": "Fathom"
+	}
+}

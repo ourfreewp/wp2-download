@@ -1,0 +1,16 @@
+{
+	"$schema": "../../schema.json",
+	"name": "Iubenda Cookie Solution",
+	"slug": "iubenda-cookie-law-solution",
+	"type": "plugin",
+	"version": "auto",
+	"origin": {
+		"type": "wporg",
+		"slug": "iubenda-cookie-law-solution",
+		"subtype": "plugin"
+	},
+	"meta": {
+		"description": "Cookie consent and compliance tools.",
+		"author": "Iubenda"
+	}
+}
