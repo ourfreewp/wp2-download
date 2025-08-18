@@ -4,7 +4,7 @@ WP2 Download is a manifest-driven package hub for WordPress, designed for secure
 
 ## 🚀 Quick Start
 
-See [Install Guide](docs/install-guide.md) for server setup and client integration.
+See [Install Guide](wp-content/mu-plugins/wp2-download/docs/install-guide.md) for server setup and client integration.
 
 ## 📦 Codebase Structure
 
@@ -16,12 +16,12 @@ See [Install Guide](docs/install-guide.md) for server setup and client integrati
 
 ## 🧩 Features
 
-- Manifest-driven catalog (see [Schema Reference](docs/schema.md))
+- Manifest-driven catalog (see [Schema Reference](wp-content/mu-plugins/wp2-download/docs/schema.md))
 - Secure Cloudflare R2 storage with presigned URLs
 - GitHub Actions release automation
-- Health checks ([Health Checks](docs/health-checks.md))
+- Health checks ([Health Checks](wp-content/mu-plugins/wp2-download/docs/health-checks.md))
 - Licensing, analytics, update channels
-- REST API endpoints ([API Reference](docs/api-reference.md))
+- REST API endpoints ([API Reference](wp-content/mu-plugins/wp2-download/docs/api-reference.md))
 - Service Locator pattern (PSR-4: `WP2\Download\`)
 
 ## 🖥️ Compatibility
@@ -32,39 +32,39 @@ See [Install Guide](docs/install-guide.md) for server setup and client integrati
 
 ## 🔒 Security
 
-- Secrets management ([SECURITY.md](docs/SECURITY.md))
+- Secrets management ([SECURITY.md](wp-content/mu-plugins/wp2-download/docs/SECURITY.md))
 - IAM, HTTPS, GitHub Actions secrets
 - Ingest token for release API
 
 ## 🗺️ Roadmap
 
-- Multi-origin support ([Origins Reference](docs/origins.md))
+- Multi-origin support ([Origins Reference](wp-content/mu-plugins/wp2-download/docs/origins.md))
 - Advanced health checks
 - Custom analytics adapters
 - Improved admin UI
 
 ## 🩺 Health Checks
 
-See [Health Checks](docs/health-checks.md) for catalog and implementation details.
+See [Health Checks](wp-content/mu-plugins/wp2-download/docs/health-checks.md) for catalog and implementation details.
 
 ## 🆘 Support
 
-- [Usage Guide](docs/usage-guide.md)
-- [Client Plugin Guide](docs/client-plugin-guide.md)
-- [Client Updater Guide](docs/client-updater-guide.md)
-- [Install Guide](docs/install-guide.md)
-- [Architecture](docs/architecture.md)
-- [API Reference](docs/api-reference.md)
-- [Glossary](docs/GLOSSARY.md)
+- [Usage Guide](wp-content/mu-plugins/wp2-download/docs/usage-guide.md)
+- [Client Plugin Guide](wp-content/mu-plugins/wp2-download/docs/client-plugin-guide.md)
+- [Client Updater Guide](wp-content/mu-plugins/wp2-download/docs/client-updater-guide.md)
+- [Install Guide](wp-content/mu-plugins/wp2-download/docs/install-guide.md)
+- [Architecture](wp-content/mu-plugins/wp2-download/docs/architecture.md)
+- [API Reference](wp-content/mu-plugins/wp2-download/docs/api-reference.md)
+- [Glossary](wp-content/mu-plugins/wp2-download/docs/GLOSSARY.md)
 
 ## 📝 Contributing
 
-See [Contributing Guide](docs/CONTRIBUTING.md) for how to get involved.
+See [Contributing Guide](wp-content/mu-plugins/wp2-download/docs/CONTRIBUTING.md) for how to get involved.
 
 ## 📚 Documentation Index
 
-See [Documentation Index](docs/index.md) for a full list of guides and references.
+See [Documentation Index](wp-content/mu-plugins/wp2-download/docs/index.md) for a full list of guides and references.
 
 ## 🏷️ Versioning & Channels
 
-See [Versioning Policy](docs/VERSIONING.md) for release and update channel details.
+See [Versioning Policy](wp-content/mu-plugins/wp2-download/docs/VERSIONING.md) for release and update channel details.
