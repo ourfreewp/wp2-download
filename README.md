@@ -1,5 +1,8 @@
 # wp2-download
 
+> [!WARNING]
+> Development is ongoing, and the code is still a work in progress.
+
 WP2 Download is a manifest-driven package hub for WordPress, designed for secure, scalable distribution of plugins, themes, and must-use packages. It supports automated releases, health checks, analytics, licensing, and integration with native WordPress update flows.
 
 ## 🚀 Quick Start
