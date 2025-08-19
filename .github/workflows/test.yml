@@ -32,13 +32,11 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-      # Register WordPress coding standard for phpcs
-      - name: Register WordPress Coding Standard
-        run: wp-content/wp2/vendor/bin/phpcs --config-set installed_paths wp-content/wp2/vendor/wp-coding-standards/wpcs
-
-      # Register PHPCSExtra sniffs for phpcs
-      - name: Register PHPCSExtra Sniffs
-        run: wp-content/wp2/vendor/bin/phpcs --config-set installed_paths wp-content/wp2/vendor/wp-coding-standards/wpcs,wp-content/wp2/vendor/phpcsstandards/phpcsextra
+      # Register PHPCS standards for phpcs
+      - name: Register PHPCS Standards
+        run: |
+          wp-content/wp2/vendor/bin/phpcs --config-set installed_paths wp-content/wp2/vendor/wp-coding-standards/wpcs,wp-content/wp2/vendor/phpcsstandards/phpcsextra,wp-content/wp2/vendor/phpcsstandards/phpcsutils
+          wp-content/wp2/vendor/bin/phpcs -i
 
       # Lint PHP files
       - name: Lint PHP files
