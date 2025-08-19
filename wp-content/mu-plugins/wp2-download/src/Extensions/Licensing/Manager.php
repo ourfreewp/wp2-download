@@ -1,6 +1,12 @@
 <?php
 namespace WP2\Download\Extensions\Licensing;
 
+/**
+ * @component_id extensions_licensing_manager
+ * @namespace extensions.licensing
+ * @type Manager
+ * @note "Manages licensing extensions and validation."
+ */
 class Manager {
 	protected $extensions = [];
 

@@ -3,6 +3,12 @@ namespace WP2\Download\REST\Manifests;
 
 use WP2\Download\Release\Channel;
 
+/**
+ * @component_id rest_manifests_controller
+ * @namespace rest.manifests
+ * @type Controller
+ * @note "Handles REST API routes for manifest generation."
+ */
 class Controller {
 	public function register_routes() {
 		add_action( 'rest_api_init', function () {

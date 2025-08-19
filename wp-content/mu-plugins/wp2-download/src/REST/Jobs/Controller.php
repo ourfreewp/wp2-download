@@ -6,7 +6,10 @@ use WP2\Download\Admin\Jobs;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * REST controller for managing scheduled jobs (actions).
+ * @component_id rest_jobs_controller
+ * @namespace rest.jobs
+ * @type Controller
+ * @note "REST controller for managing scheduled jobs (actions)."
  */
 class Controller {
 	/**

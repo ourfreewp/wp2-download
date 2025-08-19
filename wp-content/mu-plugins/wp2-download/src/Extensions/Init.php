@@ -8,6 +8,12 @@ use WP2\Download\Extensions\Identity\Manager as IdentityManager;
 use WP2\Download\Extensions\Licensing\Manager as LicensingManager;
 use WP2\Download\Extensions\Storage\Manager as StorageManager;
 
+/**
+ * @component_id extensions_init
+ * @namespace extensions
+ * @type Bootstrap
+ * @note "Initializes all extension managers."
+ */
 class Init {
 	public $analytics;
 	public $commerce;

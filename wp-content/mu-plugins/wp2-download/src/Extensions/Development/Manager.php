@@ -1,6 +1,12 @@
 <?php
 namespace WP2\Download\Extensions\Development;
 
+/**
+ * @component_id extensions_development_manager
+ * @namespace extensions.development
+ * @type Manager
+ * @note "Manages development extensions and execution."
+ */
 class Manager {
 	protected $extensions = [];
 

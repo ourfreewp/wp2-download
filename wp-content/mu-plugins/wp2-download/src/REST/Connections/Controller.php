@@ -6,6 +6,12 @@ defined( 'ABSPATH' ) || exit();
 
 use WP2\Download\Services\Locator;
 
+/**
+ * @component_id rest_connections_controller
+ * @namespace rest.connections
+ * @type Controller
+ * @note "Handles REST API routes for connection testing."
+ */
 class Controller {
 	/**
 	 * Register REST routes for connection testing.
