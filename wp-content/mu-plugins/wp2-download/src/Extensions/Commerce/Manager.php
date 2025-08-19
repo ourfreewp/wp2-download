@@ -1,6 +1,12 @@
 <?php
 namespace WP2\Download\Extensions\Commerce;
 
+/**
+ * @component_id extensions_commerce_manager
+ * @namespace extensions.commerce
+ * @type Manager
+ * @note "Manages commerce extensions and purchase URLs."
+ */
 class Manager {
 	protected $extensions = [];
 

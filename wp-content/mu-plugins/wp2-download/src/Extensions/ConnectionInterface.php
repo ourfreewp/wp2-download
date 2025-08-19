@@ -2,7 +2,10 @@
 namespace WP2\Download\Extensions;
 
 /**
- * Standard interface for all core and extension adapters.
+ * @component_id extensions_connection_interface
+ * @namespace extensions
+ * @type Interface
+ * @note "Standard interface for all core and extension adapters."
  */
 interface ConnectionInterface {
 	public function get_id(): string;

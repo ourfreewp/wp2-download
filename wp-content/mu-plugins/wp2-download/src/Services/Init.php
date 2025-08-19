@@ -5,11 +5,10 @@ namespace WP2\Download\Services;
 defined( 'ABSPATH' ) || exit();
 
 /**
- * Services Init
- *
- * Registers settings and provides light-weight helpers used during bootstrap.
- *
- * @package WP2\Download\Services
+ * @component_id services_init
+ * @namespace services
+ * @type Bootstrap
+ * @note "Registers settings and helpers for bootstrap."
  */
 class Init {
 

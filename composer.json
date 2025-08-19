@@ -1,0 +1,29 @@
+{
+	"name": "wp2/application-suite",
+	"description": "The complete WP2 application suite.",
+	"type": "project",
+	"require": {
+		"php": ">=8.0",
+		"aws/aws-sdk-php": "^3.200"
+	},
+	"autoload": {
+		"psr-4": {
+			"WP2\\Download\\": "wp-content/mu-plugins/wp2-download/src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests/"
+		}
+	},
+	"config": {
+		"vendor-dir": "wp-content/wp2/vendor",
+		"allow-plugins": {
+			"composer/installers": true,
+			"pestphp/pest-plugin": true
+		}
+	},
+	"require-dev": {
+		"pestphp/pest": "^3.8"
+	}
+}

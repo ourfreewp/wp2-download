@@ -1,6 +1,12 @@
 <?php
 namespace WP2\Download\Extensions\Identity;
 
+/**
+ * @component_id extensions_identity_manager
+ * @namespace extensions.identity
+ * @type Manager
+ * @note "Manages identity extensions and authentication."
+ */
 class Manager {
 	protected $extensions = [];
 

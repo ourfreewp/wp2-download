@@ -3,6 +3,12 @@ namespace WP2\Download\REST\Packages;
 
 use WP2\Download\Config;
 
+/**
+ * @component_id rest_packages_controller
+ * @namespace rest.packages
+ * @type Controller
+ * @note "Handles REST API routes for package info."
+ */
 class Controller {
 	public function register_routes() {
 		add_action( 'rest_api_init', function () {

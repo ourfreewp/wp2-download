@@ -3,6 +3,12 @@ namespace WP2\Download\REST\Releases;
 use WP2\Download\Config as Config;
 use WP2\Download\Release\Channel;
 
+/**
+ * @component_id rest_releases_controller
+ * @namespace rest.releases
+ * @type Controller
+ * @note "Handles REST API routes for release ingestion."
+ */
 class Controller {
 	public function register_routes() {
 		add_action( 'rest_api_init', function () {

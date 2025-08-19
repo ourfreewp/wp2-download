@@ -1,6 +1,12 @@
 <?php
 namespace WP2\Download\Extensions\Storage;
 
+/**
+ * @component_id extensions_storage_manager
+ * @namespace extensions.storage
+ * @type Manager
+ * @note "Manages storage extensions and operations."
+ */
 class Manager {
 	protected $extensions = [];
 

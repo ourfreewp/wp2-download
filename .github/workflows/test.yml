@@ -1,0 +1,54 @@
+# .github/workflows/test.yml
+
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    
+
+jobs:
+  test_and_build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository's code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up the PHP environment
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, dom, openssl
+          tools: composer:v2
+          coverage: xdebug
+
+      # Step 3: Install Composer dependencies
+      - name: Install Dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      # In .github/workflows/test.yml
+      - name: Lint PHP files
+        run: ./vendor/bin/phpcs --standard=WordPress wp-content/
+
+      # Step 4: Run the test suite
+      - name: Run tests
+        run: ./vendor/bin/pest
+
+      # Step 5: Build the production package
+      - name: Create Deployment Package
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: zip -r wp2-deployment-package.zip wp-content
+
+      # Step 6: Upload the package as an artifact
+      - name: Upload Package Artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-package
+          path: wp2-deployment-package.zip

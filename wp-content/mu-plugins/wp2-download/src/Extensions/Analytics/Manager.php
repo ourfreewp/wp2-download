@@ -1,6 +1,12 @@
 <?php
 namespace WP2\Download\Extensions\Analytics;
 
+/**
+ * @component_id extensions_analytics_manager
+ * @namespace extensions.analytics
+ * @type Manager
+ * @note "Manages analytics extensions and execution."
+ */
 class Manager {
 	protected $extensions = [];
 
