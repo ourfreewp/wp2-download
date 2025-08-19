@@ -9,6 +9,8 @@ use WP2\Download\Admin\Manifests;
 use WP2\Download\Admin\Packages;
 use WP2\Download\Admin\Releases;
 use WP2\Download\Admin\Origins;
+use WP2\Download\Admin\Accounts;
+use WP2\Download\Admin\Machines;
 
 class Init {
 	public static function init() {
@@ -19,5 +21,7 @@ class Init {
 		( new Packages() )->register_hooks();
 		( new Releases() )->register_hooks();
 		( new Origins() )->register_hooks();
+		( new Accounts() )->register_hooks();
+		( new Machines() )->register_hooks();
 	}
 }

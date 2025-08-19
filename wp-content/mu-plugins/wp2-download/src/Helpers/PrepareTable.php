@@ -1,13 +1,13 @@
 <?php
 
-namespace WP2\Download\Admin;
+namespace WP2\Download\Helpers;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Base class for all admin tables.
  */
-abstract class ContentTable extends \WP_List_Table {
+abstract class PrepareTable extends \WP_List_Table {
 	/**
 	 * Items to display in the table.
 	 *
