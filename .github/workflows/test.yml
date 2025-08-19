@@ -34,11 +34,11 @@ jobs:
 
       # In .github/workflows/test.yml
       - name: Lint PHP files
-        run: ./vendor/bin/phpcs --standard=WordPress wp-content/
+        run: wp-content/wp2/vendor/bin/phpcs --standard=WordPress wp-content/
 
       # Step 4: Run the test suite
       - name: Run tests
-        run: ./vendor/bin/pest
+        run: wp-content/wp2/vendor/bin/pest
 
       # Step 5: Build the production package
       - name: Create Deployment Package
