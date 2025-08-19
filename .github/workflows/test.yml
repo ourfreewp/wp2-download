@@ -32,9 +32,13 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-      # In .github/workflows/test.yml
+      # Register WordPress coding standard for phpcs
+      - name: Register WordPress Coding Standard
+        run: wp-content/wp2/vendor/bin/phpcs --config-set installed_paths wp-content/wp2/vendor/wp-coding-standards/wpcs
+
+      # Lint PHP files
       - name: Lint PHP files
-        run: wp-content/wp2/vendor/bin/phpcs --standard=wp-content/wp2/vendor/wp-coding-standards/wpcs/wp-coding-standards/WordPress wp-content/
+        run: wp-content/wp2/vendor/bin/phpcs --standard=WordPress wp-content/
      
         # Step 4: Run the test suite
       - name: Run tests
