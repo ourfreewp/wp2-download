@@ -17,7 +17,7 @@ jobs:
     steps:
       # Step 1: Check out the repository's code
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       # Step 2: Set up the PHP environment
       - name: Setup PHP
@@ -48,7 +48,7 @@ jobs:
       # Step 6: Upload the package as an artifact
       - name: Upload Package Artifact
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: deployment-package
           path: wp2-deployment-package.zip
