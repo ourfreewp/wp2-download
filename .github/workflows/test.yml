@@ -34,9 +34,9 @@ jobs:
 
       # In .github/workflows/test.yml
       - name: Lint PHP files
-        run: wp-content/wp2/vendor/bin/phpcs --standard=WordPress wp-content/
-
-      # Step 4: Run the test suite
+        run: wp-content/wp2/vendor/bin/phpcs --standard=wp-content/wp2/vendor/wp-coding-standards/wpcs/wp-coding-standards/WordPress wp-content/
+     
+        # Step 4: Run the test suite
       - name: Run tests
         run: wp-content/wp2/vendor/bin/pest
 
