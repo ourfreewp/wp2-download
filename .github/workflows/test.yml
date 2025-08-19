@@ -32,6 +32,13 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
+      # Clone required sniffs for WPCS
+      - name: Clone WPCS dependencies
+        run: |
+          git clone --depth=1 https://github.com/PHPCSStandards/Universal.git wp-content/wp2/vendor/wp-coding-standards/universal
+          git clone --depth=1 https://github.com/PHPCSStandards/NormalizedArrays.git wp-content/wp2/vendor/wp-coding-standards/normalized-arrays
+          git clone --depth=1 https://github.com/PHPCSStandards/Modernize.git wp-content/wp2/vendor/wp-coding-standards/modernize
+
       # Register WordPress coding standard for phpcs
       - name: Register WordPress Coding Standard
         run: wp-content/wp2/vendor/bin/phpcs --config-set installed_paths wp-content/wp2/vendor/wp-coding-standards/wpcs
