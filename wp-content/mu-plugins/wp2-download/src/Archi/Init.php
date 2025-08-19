@@ -14,7 +14,7 @@ final class Init {
 
 	public function boot(): void {
 		// Hook the initialization function into plugins_loaded.
-		add_action( 'plugins_loaded', [ $this, 'initialize' ], 9 );
+		add_action( 'plugins_loaded', [ $this, 'initialize' ] );
 	}
 
 	/**

@@ -19,6 +19,8 @@ use WP2\Download\Extensions\Init as ExtensionInit;
 
 use WP2\Download\Archi\Init as ArchiInit;
 
+use WP2\Download\Archi\Helpers as ArchiHelper;
+
 
 /**
  * Register all feature initializers in load order.
@@ -54,6 +56,8 @@ function wp2_download_bootstrap(): void {
 	$archi_init = new ArchiInit();
 	$archi_init->boot();
 
+	// Register components from PHPDoc annotations in the codebase
+	\WP2\Download\Archi\Parsers\PHPDoc::registerComponentsFromPHPDoc( __DIR__ );
 }
 
 wp2_download_bootstrap();

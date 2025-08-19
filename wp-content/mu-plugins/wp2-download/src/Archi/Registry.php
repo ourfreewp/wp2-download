@@ -23,7 +23,7 @@ final class Registry {
 	}
 
 	public function boot(): void {
-		add_action( 'init', [ $this, 'load_components' ], 8 );
+		add_action( 'init', [ $this, 'load_components' ] );
 	}
 
 	public function load_components( bool $force_recache = false ): void {
@@ -123,6 +123,7 @@ final class Registry {
 			'relations' => [],
 			'meta' => is_array( $payload['meta'] ?? null ) ? $payload['meta'] : [],
 		];
+		error_log( 'DEBUG: Registry normalized component: ' . print_r( $component, true ) );
 
 		foreach ( (array) ( $payload['relations'] ?? [] ) as $edge ) {
 			$to = strtolower( trim( (string) ( $edge['to'] ?? '' ) ) );

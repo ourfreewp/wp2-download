@@ -38,6 +38,14 @@ final class Generator {
 	 * @return string The complete Mermaid class diagram definition.
 	 */
 	public static function from_components( array $components, array $opts = [] ): string {
+		// DEBUG: Output facets for each component before rendering
+		foreach ( $components as $id => $c ) {
+			if ( isset( $c['facets'] ) ) {
+				error_log( 'DEBUG: Component ' . $id . ' facets: ' . print_r( $c['facets'], true ) );
+			} else {
+				error_log( 'DEBUG: Component ' . $id . ' has no facets' );
+			}
+		}
 		// Return a placeholder diagram if the components array is empty.
 		if ( empty( $components ) ) {
 			return self::get_placeholder_diagram();
@@ -112,14 +120,15 @@ final class Generator {
 
 			foreach ( $ns_components as $id => $c ) {
 				$class_id = self::escape_id( $id );
-				$class_id_bt = '`' . $class_id . '`';
+				$class_id_bt = $class_id;
 				$title = self::escape_text( $c['title'] ?? $id );
+				$clean_title = trim( $title, '"' );
 				$annotation = self::escape_text( $c['type'] ?? 'component' );
 				$class_style = ! empty( $c['css_class'] ) ? ':::' . self::escape_id( $c['css_class'] ) : '';
 				$generic = ! empty( $c['generic'] ) ? '<' . self::escape_text( $c['generic'] ) . '>' : '';
 
 				// Backtick-escaped class label
-				$lines[] = $indent . 'class ' . $class_id_bt . $generic . '["' . $title . '"]' . $class_style . ' {';
+				$lines[] = $indent . 'class ' . $class_id_bt . $generic . '["' . $clean_title . '"]' . $class_style . ' {';
 				$lines[] = $indent . '    <<' . $annotation . '>>';
 
 				// Add members (facets) with visibility, classifiers, generic types, and colon syntax option.
@@ -130,12 +139,23 @@ final class Generator {
 						$classifier = ! empty( $facet['classifier'] ) ? self::get_classifier_symbol( $facet['classifier'] ) : '';
 						$generic = ! empty( $facet['generic'] ) ? '<' . self::escape_text( $facet['generic'] ) . '>' : '';
 						$type = isset( $facet['type'] ) ? self::escape_text( $facet['type'] ) : '';
+						$return_type = ! empty( $facet['returnType'] ) ? self::escape_text( $facet['returnType'] ) : '';
+
+						// Render constants (classifier 'const') as static members with type
+						if ( strtolower( $facet['classifier'] ?? '' ) === 'const' ) {
+							$static_symbol = self::get_classifier_symbol( 'static' );
+							if ( $use_colon_syntax && $return_type ) {
+								$lines[] = $indent . '    ' . $visibility . $static_symbol . ' ' . $text . ': ' . $return_type;
+							} else {
+								$lines[] = $indent . '    ' . $visibility . $static_symbol . ' ' . $return_type . ' ' . $text;
+							}
+							continue;
+						}
 
 						// Differentiate between attributes and methods.
 						if ( isset( $facet['parameters'] ) ) {
 							$parameters = array_map( fn( $p ) => self::escape_text( $p['name'] ), $facet['parameters'] );
 							$params_str = implode( ', ', $parameters );
-							$return_type = ! empty( $facet['returnType'] ) ? self::escape_text( $facet['returnType'] ) : '';
 							if ( $use_colon_syntax && $return_type ) {
 								$lines[] = $indent . '    ' . $visibility . $text . '(' . $params_str . ')' . $generic . ': ' . $return_type . $classifier;
 							} else {
@@ -294,7 +314,7 @@ final class Generator {
 	 */
 	private static function escape_text( string $text ): string {
 		$text = str_replace( '\\', '\\\\', $text );
-		$text = str_replace( '"', '\"', $text );
+		// Removed double quote escaping for Mermaid labels
 		$text = str_replace( "\n", "\\n", $text );
 		// Allow angle brackets for generics, but escape if not part of generic type
 		if ( ! preg_match( '/<.*>/', $text ) ) {

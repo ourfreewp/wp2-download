@@ -2,6 +2,22 @@
 
 namespace WP2\Download;
 
+/**
+ * @component_id config
+ * @namespace core
+ * @type Service
+ * @title "Configuration Service"
+ * @facets [
+ *   { "name": "WP2_POST_TYPE_PLUGIN", "visibility": "+", "classifier": "const", "returnType": "string" },
+ *   { "name": "WP2_POST_TYPE_THEME", "visibility": "+", "classifier": "const", "returnType": "string" },
+ *   { "name": "WP2_POST_TYPE_MU", "visibility": "+", "classifier": "const", "returnType": "string" },
+ *   { "name": "WP2_META_VERSION", "visibility": "+", "classifier": "const", "returnType": "string" },
+ *   { "name": "WP2_META_R2_FILE_KEY", "visibility": "+", "classifier": "const", "returnType": "string" },
+ *   { "name": "WP2_META_CHANNEL", "visibility": "+", "classifier": "const", "returnType": "string" },
+ *   { "name": "WP2_POST_STATUS_PUBLISH", "visibility": "+", "classifier": "const", "returnType": "string" }
+ * ]
+ * @note "Central configuration constants for WP2 Download."
+ */
 class Config {
 	// Post types
 	public const WP2_POST_TYPE_PLUGIN = 'wp2_plugin';
