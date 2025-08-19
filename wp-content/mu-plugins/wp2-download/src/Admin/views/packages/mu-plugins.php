@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit();
 
 use WP2\Download\Config as Config;
 
-class MUPlugins extends \WP2\Download\Admin\ContentTable {
+class MUPlugins extends \WP2\Download\Admin\Helpers\PrepareTable {
 	public function __construct() {
 		parent::__construct( [ 
 			'singular' => 'mu-plugin',
