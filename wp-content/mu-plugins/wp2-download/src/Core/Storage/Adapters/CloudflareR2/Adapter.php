@@ -1,6 +1,6 @@
 <?php
 // wp-content/mu-plugins/wp2-download/src/Storage/Adapters/CloudflareR2Adapter.php
-namespace WP2\Download\Storage\Adapters\CloudflareR2;
+namespace WP2\Download\Core\Storage\Adapters\CloudflareR2;
 
 defined( 'ABSPATH' ) || exit();
 
@@ -69,13 +69,13 @@ class Adapter implements ConnectionInterface {
 	 *
 	 * @param array<string,mixed> $config Adapter configuration.
 	 */
-	public function __construct( array $config = [] ) {
+	public function __construct( array $config = array() ) {
 		// Precedence: constant → env → config
-		$this->account_id = defined( 'WP2_R2_ACCOUNT_ID' ) ? WP2_R2_ACCOUNT_ID : ( getenv( 'WP2_R2_ACCOUNT_ID' ) ?: ( $config['account_id'] ?? '' ) );
-		$this->bucket = defined( 'WP2_R2_BUCKET' ) ? WP2_R2_BUCKET : ( getenv( 'WP2_R2_BUCKET' ) ?: ( $config['bucket'] ?? '' ) );
-		$this->access_key_id = defined( 'WP2_R2_ACCESS_KEY_ID' ) ? WP2_R2_ACCESS_KEY_ID : ( getenv( 'WP2_R2_ACCESS_KEY_ID' ) ?: ( $config['access_key_id'] ?? '' ) );
+		$this->account_id        = defined( 'WP2_R2_ACCOUNT_ID' ) ? WP2_R2_ACCOUNT_ID : ( getenv( 'WP2_R2_ACCOUNT_ID' ) ?: ( $config['account_id'] ?? '' ) );
+		$this->bucket            = defined( 'WP2_R2_BUCKET' ) ? WP2_R2_BUCKET : ( getenv( 'WP2_R2_BUCKET' ) ?: ( $config['bucket'] ?? '' ) );
+		$this->access_key_id     = defined( 'WP2_R2_ACCESS_KEY_ID' ) ? WP2_R2_ACCESS_KEY_ID : ( getenv( 'WP2_R2_ACCESS_KEY_ID' ) ?: ( $config['access_key_id'] ?? '' ) );
 		$this->secret_access_key = defined( 'WP2_R2_SECRET_ACCESS_KEY' ) ? WP2_R2_SECRET_ACCESS_KEY : ( getenv( 'WP2_R2_SECRET_ACCESS_KEY' ) ?: ( $config['secret_access_key'] ?? '' ) );
-		$this->endpoint = isset( $config['endpoint'] ) ? (string) $config['endpoint'] : $this->build_endpoint();
+		$this->endpoint          = isset( $config['endpoint'] ) ? (string) $config['endpoint'] : $this->build_endpoint();
 		$this->use_public_bucket = (bool) ( $config['public'] ?? false );
 	}
 

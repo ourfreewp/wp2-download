@@ -8,14 +8,14 @@ namespace WP2\Download\Extensions\Commerce;
  * @note "Manages commerce extensions and purchase URLs."
  */
 class Manager {
-	protected $extensions = [];
+	protected $extensions = array();
 
 	public function __construct() {
-		$this->extensions = apply_filters( 'wp2_register_commerce_extensions', [] );
+		$this->extensions = apply_filters( 'wp2_register_commerce_extensions', array() );
 	}
 
 	public function get_purchase_url( $context ) {
-		$urls = [];
+		$urls = array();
 		foreach ( $this->extensions as $name => $class ) {
 			if ( class_exists( $class ) ) {
 				$instance = new $class();

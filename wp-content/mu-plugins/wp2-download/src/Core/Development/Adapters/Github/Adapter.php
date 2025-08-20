@@ -1,9 +1,9 @@
 <?php
-namespace WP2\Download\Development\Adapters\Github;
+namespace WP2\Download\Core\Development\Adapters\Github;
 
 defined( 'ABSPATH' ) || exit();
 
-use WP2\Download\Development\ConnectionInterface;
+use WP2\Download\Core\Development\ConnectionInterface;
 
 /**
  * @component_id development_github_adapter
@@ -22,8 +22,8 @@ class Adapter implements ConnectionInterface {
 	/**
 	 * @param array<string,mixed> $config
 	 */
-	public function __construct( array $config = [] ) {
-		$this->token = (string) ( $config['token'] ?? ( defined( 'WP2_GITHUB_PAT' ) ? WP2_GITHUB_PAT : '' ) );
+	public function __construct( array $config = array() ) {
+		$this->token    = (string) ( $config['token'] ?? ( defined( 'WP2_GITHUB_PAT' ) ? WP2_GITHUB_PAT : '' ) );
 		$this->api_base = (string) ( $config['api_base'] ?? 'https://api.github.com' );
 		if ( isset( $config['timeout'] ) ) {
 			$this->timeout = (int) $config['timeout'];
@@ -36,16 +36,16 @@ class Adapter implements ConnectionInterface {
 			return false;
 		}
 
-		$url = rtrim( $this->api_base, '/' ) . '/user';
-		$args = [ 
-			'method' => 'GET',
+		$url  = rtrim( $this->api_base, '/' ) . '/user';
+		$args = array(
+			'method'  => 'GET',
 			'timeout' => $this->timeout,
-			'headers' => [ 
+			'headers' => array(
 				'Authorization' => 'Bearer ' . $this->token,
-				'Accept' => 'application/vnd.github+json',
-				'User-Agent' => 'wp2-download (WordPress)'
-			],
-		];
+				'Accept'        => 'application/vnd.github+json',
+				'User-Agent'    => 'wp2-download (WordPress)',
+			),
+		);
 
 		$response = wp_remote_request( $url, $args );
 		if ( is_wp_error( $response ) ) {

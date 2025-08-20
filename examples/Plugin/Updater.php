@@ -25,9 +25,9 @@ class Updater {
 		if ( ! file_exists( $public_key_path ) || ! file_exists( $package_path ) ) {
 			return false;
 		}
-		$public_key = file_get_contents( $public_key_path );
+		$public_key   = file_get_contents( $public_key_path );
 		$package_data = file_get_contents( $package_path );
-		$verified = openssl_verify( $package_data, base64_decode( $signature ), $public_key, OPENSSL_ALGO_SHA256 );
+		$verified     = openssl_verify( $package_data, base64_decode( $signature ), $public_key, OPENSSL_ALGO_SHA256 );
 		return $verified === 1;
 	}
 
@@ -65,9 +65,9 @@ class Updater {
 	 */
 	public function __construct( string $plugin_file, string $hub_url ) {
 		$this->plugin_file = $plugin_file;
-		$this->slug = dirname( plugin_basename( $this->plugin_file ) );
-		$this->api_url = rtrim( $hub_url, '/' );
-		$this->cache_key = 'wp2_updater_' . $this->slug;
+		$this->slug        = dirname( plugin_basename( $this->plugin_file ) );
+		$this->api_url     = rtrim( $hub_url, '/' );
+		$this->cache_key   = 'wp2_updater_' . $this->slug;
 
 		$this->register_hooks();
 		$this->schedule_reporting();
@@ -92,13 +92,13 @@ class Updater {
 	 * @return void
 	 */
 	public function send_report() {
-		$report_url = rtrim( $this->api_url, '/' ) . '/report-in';
+		$report_url  = rtrim( $this->api_url, '/' ) . '/report-in';
 		$plugin_data = get_plugin_data( $this->plugin_file );
 		wp_remote_post( $report_url, [ 
 			'timeout' => 10,
-			'body' => [ 
-				'slug' => $this->slug,
-				'version' => $plugin_data['Version'] ?? '',
+			'body'    => [ 
+				'slug'     => $this->slug,
+				'version'  => $plugin_data['Version'] ?? '',
 				'site_url' => home_url(),
 			]
 		] );
@@ -139,20 +139,20 @@ class Updater {
 			return $res;
 		}
 
-		$res = new \stdClass();
-		$res->name = $remote->name ?? $this->slug;
-		$res->slug = $remote->slug ?? $this->slug;
-		$res->version = $remote->version ?? '0.0.0';
-		$res->tested = $remote->tested ?? '';
-		$res->requires = $remote->requires ?? '';
-		$res->requires_php = $remote->requires_php ?? '';
-		$res->author = isset( $remote->author->name ) ? $remote->author->name : 'N/A';
-		$res->homepage = isset( $remote->links->homepage ) ? $remote->links->homepage : '';
+		$res                = new \stdClass();
+		$res->name          = $remote->name ?? $this->slug;
+		$res->slug          = $remote->slug ?? $this->slug;
+		$res->version       = $remote->version ?? '0.0.0';
+		$res->tested        = $remote->tested ?? '';
+		$res->requires      = $remote->requires ?? '';
+		$res->requires_php  = $remote->requires_php ?? '';
+		$res->author        = isset( $remote->author->name ) ? $remote->author->name : 'N/A';
+		$res->homepage      = isset( $remote->links->homepage ) ? $remote->links->homepage : '';
 		$res->download_link = $remote->download_url ?? '';
-		$res->trunk = $remote->download_url ?? '';
-		$res->last_updated = $remote->last_updated ?? '';
-		$res->sections = (array) ( $remote->sections ?? [] );
-		$res->banners = (array) ( $remote->banners ?? [] );
+		$res->trunk         = $remote->download_url ?? '';
+		$res->last_updated  = $remote->last_updated ?? '';
+		$res->sections      = (array) ( $remote->sections ?? [] );
+		$res->banners       = (array) ( $remote->banners ?? [] );
 
 		return $res;
 	}
@@ -162,24 +162,24 @@ class Updater {
 			return $transient;
 		}
 
-		$remote = $this->request_manifest();
+		$remote          = $this->request_manifest();
 		$current_version = $transient->checked[ plugin_basename( $this->plugin_file ) ] ?? '0.0.0';
 
 		if ( $remote && version_compare( $remote->version, $current_version, '>' ) ) {
-			$package_url = $remote->download_url;
-			$signature = $remote->signature ?? '';
+			$package_url     = $remote->download_url;
+			$signature       = $remote->signature ?? '';
 			$public_key_path = WP_CONTENT_DIR . '/mu-plugins/wp2-download/assets/public_key.pem';
-			$tmp_package = download_url( $package_url );
+			$tmp_package     = download_url( $package_url );
 			if ( is_wp_error( $tmp_package ) || ! $signature || ! $this->verify_package_signature( $tmp_package, $signature, $public_key_path ) ) {
 				error_log( 'WP2 Updater: Package signature verification failed.' );
 				return $transient;
 			}
-			$res = new \stdClass();
-			$res->slug = $this->slug;
-			$res->plugin = plugin_basename( $this->plugin_file );
-			$res->new_version = $remote->version;
-			$res->tested = $remote->tested;
-			$res->package = $package_url;
+			$res                                 = new \stdClass();
+			$res->slug                           = $this->slug;
+			$res->plugin                         = plugin_basename( $this->plugin_file );
+			$res->new_version                    = $remote->version;
+			$res->tested                         = $remote->tested;
+			$res->package                        = $package_url;
 			$transient->response[ $res->plugin ] = $res;
 		}
 

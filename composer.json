@@ -21,14 +21,18 @@
 		"allow-plugins": {
 			"composer/installers": true,
 			"pestphp/pest-plugin": true,
-			"dealerdirect/phpcodesniffer-composer-installer": false
+			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	},
 	"require-dev": {
 		"pestphp/pest": "^3.8",
 		"squizlabs/php_codesniffer": "^3.7",
-		"wp-coding-standards/wpcs": "^3.2",
+		"wp-coding-standards/wpcs": "2.3.0",
+		"humanmade/coding-standards": "^1.2",
 		"phpcsstandards/phpcsextra": "^1.4",
-		"phpcsstandards/phpcsutils": "^1.1"
+		"phpcsstandards/phpcsutils": "^1.1",
+		"phpcompatibility/php-compatibility": "^9.3",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"fig-r/psr2r-sniffer": "^0.5.0"
 	}
 }

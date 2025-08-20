@@ -16,7 +16,6 @@ defined( 'ABSPATH' ) || exit;
  * @return void
  */
 function wp2_download_bootstrap(): void {
-
 }
 
 wp2_download_bootstrap();

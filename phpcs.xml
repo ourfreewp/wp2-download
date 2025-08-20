@@ -1,22 +1,64 @@
 <?xml version="1.0"?>
-<ruleset name="WP2 Coding Standards">
-    <description>WP2: Lint only our source code using WordPress standard.</description>
+<ruleset name="WP2 Human Made Coding Standards">
+    <arg value="sp" />
+    <arg name="basepath" value="." />
+    <arg name="colors" />
+    <arg name="extensions" value="php" />
+    <arg name="parallel" value="50" />
+    <arg name="cache" value=".phpcs.cache" />
 
-    <!-- Use WordPress Core standard -->
-    <rule ref="WordPress" />
+    <description>
+        A modern, pragmatic, and opinionated set of WordPress and PHP coding standards.
+        This ruleset combines the best of WordPress and Human Made standards.
+    </description>
 
-    <!-- Limit scanning to our PHP source directory -->
+    <rule ref="HM">
+        <exclude name="HM.Files.NamespaceDirectoryName"/>
+        <exclude name="HM.Files.ClassFileName.MismatchedName"/>
+    </rule>
+    
+    <config name="testVersion" value="7.4-8.2" />
+
     <file>wp-content/mu-plugins/wp2-download/src</file>
-
-    <!-- Extensions and performance -->
-    <config name="extensions" value="php"/>
-    <arg name="parallel" value="4"/>
-    <arg value="ps"/>
-
-    <!-- Exclusions -->
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/node_modules/*</exclude-pattern>
     <exclude-pattern>wp-content/uploads/*</exclude-pattern>
     <exclude-pattern>wp-content/cache/*</exclude-pattern>
     <exclude-pattern>*.min.php</exclude-pattern>
+    <exclude-pattern>*/templates/*</exclude-pattern>
+    <exclude-pattern>*.blade.php</exclude-pattern>
+
+    <rule ref="WordPress-Extra">
+        <exclude name="WordPress.NamingConventions.ValidVariableName"/>
+        <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+        <exclude name="WordPress.PHP.YodaConditions"/>
+        <exclude name="Generic.Functions.CallTimePassByReference"/>
+        <exclude name="Generic.Arrays.DisallowLongArraySyntax.Found"/>
+    </rule>
+
+    <rule ref="Generic.ControlStructures.DisallowYodaConditions" />
+    
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+
+    <rule ref="WordPress.Files.FileName">
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+    </rule>
+
+    <rule ref="WordPress.Security.EscapeOutput">
+        <properties>
+            <property name="customEscapingFunctions" type="array">
+                <element value="esc_custom_function"/>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="WordPress.Arrays.MultipleStatementAlignment">
+        <properties>
+            <property name="alignMultilineItems" value="!=100"/>
+        </properties>
+    </rule>
+    
+    <rule ref="Generic.Metrics.CyclomaticComplexity" />
+    <rule ref="WordPress.WP.I18n" />
 </ruleset>

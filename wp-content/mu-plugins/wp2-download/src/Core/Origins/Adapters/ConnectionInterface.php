@@ -5,7 +5,7 @@
  * @package WP2\Download
  */
 
-namespace WP2\Download\Origin\Adapters;
+namespace WP2\Download\Core\Origins\Adapters;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -54,7 +54,7 @@ interface ConnectionInterface {
 	 * @param array $constraints Optional constraints (e.g., channel, semver range).
 	 * @return array List of version strings (newest-first recommended).
 	 */
-	public function fetch_versions( array $source_ref, array $constraints = [] ): array;
+	public function fetch_versions( array $source_ref, array $constraints = array() ): array;
 
 	/**
 	 * Resolve the artifact to deliver for a specific version.

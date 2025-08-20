@@ -1,7 +1,8 @@
 <?php
-namespace WP2\Download\Licensing\Adapters\Default;
+namespace WP2\Download\Core\Licensing\Adapters\Default;
 
-use WP2\Download\Licensing\ConnectionInterface;
+use WP2\Download\Core\Licensing\ConnectionInterface;
+
 /**
  * @component_id licensing_default_adapter
  * @namespace licensing

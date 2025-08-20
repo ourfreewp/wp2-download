@@ -4,4 +4,5 @@ defined( 'ABSPATH' ) || exit();
 ?>
 
 <?php if ( true ) : ?>
-<?php endif; ?>
+	<?php
+endif;

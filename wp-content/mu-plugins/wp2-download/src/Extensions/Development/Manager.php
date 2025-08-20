@@ -8,10 +8,10 @@ namespace WP2\Download\Extensions\Development;
  * @note "Manages development extensions and execution."
  */
 class Manager {
-	protected $extensions = [];
+	protected $extensions = array();
 
 	public function __construct() {
-		$this->extensions = apply_filters( 'wp2_register_development_extensions', [] );
+		$this->extensions = apply_filters( 'wp2_register_development_extensions', array() );
 	}
 
 	public function run( $context ) {

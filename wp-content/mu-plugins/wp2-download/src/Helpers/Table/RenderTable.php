@@ -1,5 +1,5 @@
 <?php
-namespace WP2\Download\Helpers;
+namespace WP2\Download\Helpers\Table;
 
 use WP_List_Table;
 
@@ -14,8 +14,8 @@ class RenderTable {
 	 * Render a WP_List_Table instance with standard form markup.
 	 *
 	 * @param WP_List_Table $table
-	 * @param string $title
-	 * @param string $page_slug
+	 * @param string        $title
+	 * @param string        $page_slug
 	 */
 	public static function render( WP_List_Table $table, string $title, string $page_slug ) {
 		?>

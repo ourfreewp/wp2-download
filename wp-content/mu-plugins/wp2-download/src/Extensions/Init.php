@@ -23,11 +23,11 @@ class Init {
 	public $storage;
 
 	public function init() {
-		$this->analytics = new AnalyticsManager();
-		$this->commerce = new CommerceManager();
+		$this->analytics   = new AnalyticsManager();
+		$this->commerce    = new CommerceManager();
 		$this->development = new DevelopmentManager();
-		$this->identity = new IdentityManager();
-		$this->licensing = new LicensingManager();
-		$this->storage = new StorageManager();
+		$this->identity    = new IdentityManager();
+		$this->licensing   = new LicensingManager();
+		$this->storage     = new StorageManager();
 	}
 }

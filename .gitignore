@@ -22,3 +22,4 @@ Thumbs.db
 vendor/
 debug.log
 composer.lock
+.phpcs.cache

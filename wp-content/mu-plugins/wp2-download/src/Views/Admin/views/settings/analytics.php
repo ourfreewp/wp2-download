@@ -2,6 +2,7 @@
 // wp-content/mu-plugins/wp2-download/src/Admin/views/settings/analytics.php
 defined( 'ABSPATH' ) || exit();
 use WP2\Download\Services\Locator;
+
 $analytics_adapters = Locator::list_analytics_adapters();
 $selected_analytics = (string) get_option( 'wp2_download_analytics_adapter', 'DefaultAdapter' );
 ?>

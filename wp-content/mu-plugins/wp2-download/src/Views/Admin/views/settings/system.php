@@ -4,15 +4,15 @@ defined( 'ABSPATH' ) || exit();
 
 use WP2\Download\Services\Locator;
 
-$storage_adapters = Locator::list_storage_adapters();
-$dev_adapters = Locator::list_development_adapters();
+$storage_adapters   = Locator::list_storage_adapters();
+$dev_adapters       = Locator::list_development_adapters();
 $licensing_adapters = Locator::list_licensing_adapters();
 $analytics_adapters = Locator::list_analytics_adapters();
 
-$selected_storage = (string) get_option( 'wp2_download_storage_adapter', 'DefaultAdapter' );
+$selected_storage     = (string) get_option( 'wp2_download_storage_adapter', 'DefaultAdapter' );
 $selected_development = (string) get_option( 'wp2_download_development_adapter', 'DefaultAdapter' );
-$selected_licensing = (string) get_option( 'wp2_download_licensing_adapter', 'DefaultAdapter' );
-$selected_analytics = (string) get_option( 'wp2_download_analytics_adapter', 'DefaultAdapter' );
+$selected_licensing   = (string) get_option( 'wp2_download_licensing_adapter', 'DefaultAdapter' );
+$selected_analytics   = (string) get_option( 'wp2_download_analytics_adapter', 'DefaultAdapter' );
 ?>
 
 <form method="post" action="options.php">

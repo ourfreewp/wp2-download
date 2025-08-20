@@ -5,7 +5,7 @@
  * @package WP2\Download
  */
 
-namespace WP2\Download\Origin\Adapters\WP;
+namespace WP2\Download\Core\Origins\Adapters\WP;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,31 +33,31 @@ class Adapter implements ConnectionInterface {
 	public function validate_source_ref( array $source_ref ): bool {
 		$slug = isset( $source_ref['slug'] ) ? (string) $source_ref['slug'] : '';
 		if ( $slug === '' ) {
-			$this->last_error = [ 'message' => 'Missing wp.org slug.' ];
+			$this->last_error = array( 'message' => 'Missing wp.org slug.' );
 			return false;
 		}
 		return true;
 	}
 
 	public function fetch_metadata( array $source_ref ): array {
-		return [ 
-			'name' => $source_ref['slug'] ?? '',
+		return array(
+			'name'        => $source_ref['slug'] ?? '',
 			'description' => '',
-			'links' => [],
-			'requires' => [],
-		];
+			'links'       => array(),
+			'requires'    => array(),
+		);
 	}
 
-	public function fetch_versions( array $source_ref, array $constraints = [] ): array {
-		return [];
+	public function fetch_versions( array $source_ref, array $constraints = array() ): array {
+		return array();
 	}
 
 	public function resolve_artifact( array $source_ref, string $version ): array {
-		return [ 
-			'url' => '',
-			'headers' => [],
+		return array(
+			'url'      => '',
+			'headers'  => array(),
 			'checksum' => '',
-		];
+		);
 	}
 
 	public function supports_mirror( array $source_ref ): bool {

@@ -1,5 +1,5 @@
 <?php
-namespace WP2\Download\Archi;
+namespace WP2\Download\Modules\Archi;
 
 defined( 'ABSPATH' ) || exit;
 /**
@@ -18,8 +18,8 @@ final class Caching {
 	public const TRANSIENT_KEY = 'wp2_archi_graph_cache';
 
 	public function boot(): void {
-		add_action( 'activated_plugin', [ $this, 'flush_cache' ] );
-		add_action( 'deactivated_plugin', [ $this, 'flush_cache' ] );
+		add_action( 'activated_plugin', array( $this, 'flush_cache' ) );
+		add_action( 'deactivated_plugin', array( $this, 'flush_cache' ) );
 	}
 
 	public function flush_cache(): void {

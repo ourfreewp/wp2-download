@@ -7,8 +7,8 @@ if ( ! class_exists( '\WP2\Download\Admin\Jobs' ) ) {
 }
 
 $jobs_admin = new Jobs();
-$jobs = $jobs_admin->get_jobs();
-$statuses = $jobs_admin->get_statuses();
+$jobs       = $jobs_admin->get_jobs();
+$statuses   = $jobs_admin->get_statuses();
 
 ?>
 <div class="wrap">
@@ -36,7 +36,7 @@ $statuses = $jobs_admin->get_statuses();
 					<td><?php echo esc_html( $job['status'] ?? '' ); ?></td>
 					<td><?php echo ! empty( $job['scheduled_date_gmt'] ) ? esc_html( $job['scheduled_date_gmt'] ) : '-'; ?></td>
 					<td>
-						<?php if ( in_array( $job['status'], [ 'pending', 'in-progress' ], true ) ) : ?>
+						<?php if ( in_array( $job['status'], array( 'pending', 'in-progress' ), true ) ) : ?>
 							<form method="post" style="display:inline;">
 								<input type="hidden" name="action_id" value="<?php echo esc_attr( $job['ID'] ); ?>" />
 								<input type="submit" name="unschedule_job" class="button" value="<?php esc_attr_e( 'Unschedule', 'wp2-download' ); ?>" />

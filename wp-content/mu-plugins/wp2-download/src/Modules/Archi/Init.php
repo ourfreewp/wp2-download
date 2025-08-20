@@ -1,9 +1,7 @@
 <?php
-namespace WP2\Download\Archi;
+namespace WP2\Download\Modules\Archi;
 
 use WP2\Download\Archi\Admin\Page as AdminPage;
-use WP2\Download\Archi\CLI\Commands as CLICommands;
-use WP2\Download\Archi\REST\Controller as RESTController;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,7 +19,7 @@ final class Init {
 
 	public function boot(): void {
 		// Hook the initialization function into plugins_loaded.
-		add_action( 'plugins_loaded', [ $this, 'initialize' ] );
+		add_action( 'plugins_loaded', array( $this, 'initialize' ) );
 	}
 
 	/**
@@ -37,7 +35,7 @@ final class Init {
 		( new RestController() )->boot();
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
-			\WP_CLI::add_command( 'wp2 archi', CliCommands::class);
+			\WP_CLI::add_command( 'wp2 archi', CliCommands::class );
 		}
 	}
 }

@@ -1,5 +1,5 @@
 <?php
-namespace WP2\Download\Admin;
+namespace WP2\Download\Views\Admin;
 
 use WP2\Download\API\Packages\Controller as PackagesController;
 
@@ -15,8 +15,8 @@ class Hub {
 	 * Register hooks with WordPress.
 	 */
 	public function register_hooks(): void {
-		add_action( 'admin_menu', [ $this, 'add_admin_menu_page' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+		add_action( 'admin_menu', array( $this, 'add_admin_menu_page' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 	}
 
 	/**
@@ -33,7 +33,7 @@ class Hub {
 		wp_enqueue_style(
 			'bootstrap',
 			'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
-			[],
+			array(),
 			'5.3.0'
 		);
 
@@ -41,7 +41,7 @@ class Hub {
 		wp_enqueue_style(
 			'bootstrap-icons',
 			'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css',
-			[],
+			array(),
 			'1.11.1'
 		);
 
@@ -49,7 +49,7 @@ class Hub {
 		wp_enqueue_script(
 			'bootstrap',
 			'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js',
-			[],
+			array(),
 			'5.3.0',
 			true
 		);
@@ -58,7 +58,7 @@ class Hub {
 		wp_enqueue_style(
 			'wp2-hub-styles',
 			WP2_DOWNLOAD_URL . 'src/Admin/assets/styles/main.css',
-			[],
+			array(),
 			filemtime( WP2_DOWNLOAD_PATH . 'src/Admin/assets/styles/main.css' )
 		);
 
@@ -66,16 +66,20 @@ class Hub {
 		wp_enqueue_script(
 			'wp2-hub-scripts',
 			WP2_DOWNLOAD_URL . 'src/Admin/assets/scripts/main.js',
-			[ 'jquery' ],
+			array( 'jquery' ),
 			filemtime( WP2_DOWNLOAD_PATH . 'src/Admin/assets/scripts/main.js' ),
 			true
 		);
 		// Localize API URL, download URL, and nonce for JS
-		wp_localize_script( 'wp2-hub-scripts', 'wp2Hub', [ 
-			'apiUrl' => rest_url( 'wp2/v1/' ),
-			'downloadUrl' => home_url( '/wp2-download/' ),
-			'ajaxNonce' => wp_create_nonce( 'wp_rest' )
-		] );
+		wp_localize_script(
+			'wp2-hub-scripts',
+			'wp2Hub',
+			array(
+				'apiUrl'      => rest_url( 'wp2/v1/' ),
+				'downloadUrl' => home_url( '/wp2-download/' ),
+				'ajaxNonce'   => wp_create_nonce( 'wp_rest' ),
+			)
+		);
 	}
 
 	/**
@@ -87,7 +91,7 @@ class Hub {
 			'WP2 Hub',
 			'manage_options',
 			'wp2-hub',
-			[ $this, 'render_dashboard_page' ],
+			array( $this, 'render_dashboard_page' ),
 			'dashicons-cloud',
 			20
 		);

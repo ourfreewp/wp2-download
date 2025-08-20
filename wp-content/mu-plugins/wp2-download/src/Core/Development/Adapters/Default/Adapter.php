@@ -1,7 +1,7 @@
 <?php
-namespace WP2\Download\Development\Adapters\Default;
+namespace WP2\Download\Core\Development\Adapters\Default;
 
-use WP2\Download\Development\ConnectionInterface;
+use WP2\Download\Core\Development\ConnectionInterface;
 
 /**
  * @component_id development_default_adapter

@@ -8,11 +8,11 @@ namespace WP2\Download\Extensions\Analytics;
  * @note "Manages analytics extensions and execution."
  */
 class Manager {
-	protected $extensions = [];
+	protected $extensions = array();
 
 	public function __construct() {
 		if ( function_exists( 'apply_filters' ) ) {
-			$this->extensions = apply_filters( 'wp2_register_analytics_extensions', [] );
+			$this->extensions = apply_filters( 'wp2_register_analytics_extensions', array() );
 		}
 	}
 

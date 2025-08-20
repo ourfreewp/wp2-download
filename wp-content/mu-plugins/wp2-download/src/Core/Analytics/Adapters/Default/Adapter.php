@@ -1,5 +1,5 @@
 <?php
-namespace WP2\Download\Analytics\Adapters\Default;
+namespace WP2\Download\Core\Analytics\Adapters\Default;
 
 use WP2\Download\Analytics\ConnectionInterface;
 
@@ -15,7 +15,7 @@ class Adapter implements ConnectionInterface {
 		return true;
 	}
 
-	public function track_event( string $event_name, array $properties = [] ): void {
+	public function track_event( string $event_name, array $properties = array() ): void {
 		// No-op for default adapter
 		return;
 	}

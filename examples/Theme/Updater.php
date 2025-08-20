@@ -14,6 +14,14 @@ namespace WP2\Download\Client\Theme;
  * @note "Handles self-hosted updates for distributed WordPress themes."
  */
 class Updater {
+
+	private $updater;
+	public function __construct() {
+		$this->updater = new Updater( get_stylesheet_directory() . '/functions.php' );
+	}
+	public function init() {
+		$this->updater->init();
+	}
 	/**
 	 * Verifies the downloaded package using a public key and signature.
 	 * @param string $package_path Path to the downloaded package file.
@@ -25,9 +33,9 @@ class Updater {
 		if ( ! file_exists( $public_key_path ) || ! file_exists( $package_path ) ) {
 			return false;
 		}
-		$public_key = file_get_contents( $public_key_path );
+		$public_key   = file_get_contents( $public_key_path );
 		$package_data = file_get_contents( $package_path );
-		$verified = openssl_verify( $package_data, base64_decode( $signature ), $public_key, OPENSSL_ALGO_SHA256 );
+		$verified     = openssl_verify( $package_data, base64_decode( $signature ), $public_key, OPENSSL_ALGO_SHA256 );
 		return $verified === 1;
 	}
 
@@ -58,8 +66,8 @@ class Updater {
 	 * @param string $hub_url Hub API URL.
 	 */
 	public function __construct( string $hub_url ) {
-		$this->slug = get_stylesheet(); // For themes, the slug is the directory name
-		$this->api_url = rtrim( $hub_url, '/' );
+		$this->slug      = get_stylesheet(); // For themes, the slug is the directory name
+		$this->api_url   = rtrim( $hub_url, '/' );
 		$this->cache_key = 'wp2_updater_' . $this->slug;
 
 		$this->register_hooks();
@@ -86,12 +94,12 @@ class Updater {
 	 */
 	public function send_report() {
 		$report_url = rtrim( $this->api_url, '/' ) . '/report-in';
-		$theme = wp_get_theme();
+		$theme      = wp_get_theme();
 		wp_remote_post( $report_url, [ 
 			'timeout' => 10,
-			'body' => [ 
-				'slug' => $this->slug,
-				'version' => $theme->get( 'Version' ),
+			'body'    => [ 
+				'slug'     => $this->slug,
+				'version'  => $theme->get( 'Version' ),
 				'site_url' => home_url(),
 			]
 		] );
@@ -127,23 +135,23 @@ class Updater {
 			return $transient;
 		}
 
-		$remote = $this->request_manifest();
+		$remote          = $this->request_manifest();
 		$current_version = $transient->checked[ $this->slug ] ?? '0.0.0';
 
 		if ( $remote && version_compare( $remote->version, $current_version, '>' ) ) {
-			$package_url = $remote->download_url;
-			$signature = $remote->signature ?? '';
+			$package_url     = $remote->download_url;
+			$signature       = $remote->signature ?? '';
 			$public_key_path = WP_CONTENT_DIR . '/mu-plugins/wp2-download/assets/public_key.pem';
-			$tmp_package = download_url( $package_url );
+			$tmp_package     = download_url( $package_url );
 			if ( is_wp_error( $tmp_package ) || ! $signature || ! $this->verify_package_signature( $tmp_package, $signature, $public_key_path ) ) {
 				error_log( 'WP2 Theme Updater: Package signature verification failed.' );
 				return $transient;
 			}
 			$transient->response[ $this->slug ] = [ 
-				'theme' => $this->slug,
+				'theme'       => $this->slug,
 				'new_version' => $remote->version,
-				'url' => isset( $remote->links->homepage ) ? $remote->links->homepage : '',
-				'package' => $package_url,
+				'url'         => isset( $remote->links->homepage ) ? $remote->links->homepage : '',
+				'package'     => $package_url,
 			];
 		}
 
@@ -155,4 +163,6 @@ class Updater {
 			delete_transient( $this->cache_key );
 		}
 	}
+
+
 }

@@ -10,15 +10,15 @@ namespace WP2\Download\Core\Packages;
 class Manifests {
 
 	private const PROCESSED_MANIFESTS_OPTION = 'wp2_processed_manifests';
-	private const TYPE_MAP = [ 
+	private const TYPE_MAP                   = array(
 		'mu-plugins' => 'mu',
-		'plugins' => 'plugin',
-		'themes' => 'theme',
-	];
-	private static $debug_messages = [];
+		'plugins'    => 'plugin',
+		'themes'     => 'theme',
+	);
+	private static $debug_messages           = array();
 
 	public function register_hooks(): void {
-		add_action( 'admin_init', [ $this, 'ingest_manifests' ] );
+		add_action( 'admin_init', array( $this, 'ingest_manifests' ) );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class Manifests {
 	public function ingest_manifests(): void {
 		self::$debug_messages[] = 'Starting manifest ingestion...';
 
-		$base_dir = WPMU_PLUGIN_DIR . '/wp2-download/data/packages';
+		$base_dir               = WPMU_PLUGIN_DIR . '/wp2-download/data/packages';
 		self::$debug_messages[] = "Checking base directory: {$base_dir}";
 
 		if ( ! is_dir( $base_dir ) ) {
@@ -53,10 +53,10 @@ class Manifests {
 		}
 		self::$debug_messages[] = 'Success: Base directory found.';
 
-		$processed = get_option( self::PROCESSED_MANIFESTS_OPTION, [] );
+		$processed = get_option( self::PROCESSED_MANIFESTS_OPTION, array() );
 
 		foreach ( self::TYPE_MAP as $dir_name => $type ) {
-			$type_dir = "{$base_dir}/{$dir_name}";
+			$type_dir               = "{$base_dir}/{$dir_name}";
 			self::$debug_messages[] = "Checking for type directory: {$type_dir}";
 
 			if ( ! is_dir( $type_dir ) ) {
@@ -69,8 +69,8 @@ class Manifests {
 					continue;
 				}
 
-				$slug = $package_dir->getFilename();
-				$manifest_path = $package_dir->getRealPath() . '/manifest.json';
+				$slug                   = $package_dir->getFilename();
+				$manifest_path          = $package_dir->getRealPath() . '/manifest.json';
 				self::$debug_messages[] = "Found package directory: '{$slug}'. Checking for manifest...";
 
 				if ( file_exists( $manifest_path ) ) {
@@ -93,25 +93,25 @@ class Manifests {
 
 	private function process_manifest( string $path, string $type, string $slug ): void {
 		$content = file_get_contents( $path );
-		$data = json_decode( $content, true );
+		$data    = json_decode( $content, true );
 		if ( ! is_array( $data ) ) {
 			return;
 		}
 
-		$name = sanitize_text_field( $data['name'] ?? $slug );
-		$post_type = "wp2_{$type}";
+		$name          = sanitize_text_field( $data['name'] ?? $slug );
+		$post_type     = "wp2_{$type}";
 		$existing_post = get_page_by_path( $slug, OBJECT, $post_type );
 
-		$post_data = [ 
-			'post_type' => $post_type,
-			'post_title' => $name,
-			'post_name' => $slug,
+		$post_data = array(
+			'post_type'   => $post_type,
+			'post_title'  => $name,
+			'post_name'   => $slug,
 			'post_status' => 'publish',
-		];
+		);
 
 		if ( $existing_post ) {
 			$post_data['ID'] = $existing_post->ID;
-			$post_id = wp_update_post( $post_data );
+			$post_id         = wp_update_post( $post_data );
 		} else {
 			$post_id = wp_insert_post( $post_data );
 		}
@@ -120,7 +120,7 @@ class Manifests {
 			return;
 		}
 
-		$meta_fields = [ 'description', 'author', 'links', 'requires_php', 'requires_wp', 'tags' ];
+		$meta_fields = array( 'description', 'author', 'links', 'requires_php', 'requires_wp', 'tags' );
 		foreach ( $meta_fields as $field ) {
 			if ( isset( $data[ $field ] ) ) {
 				update_post_meta( $post_id, "wp2_{$field}", $data[ $field ] );

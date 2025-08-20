@@ -8,10 +8,10 @@ namespace WP2\Download\Extensions\Identity;
  * @note "Manages identity extensions and authentication."
  */
 class Manager {
-	protected $extensions = [];
+	protected $extensions = array();
 
 	public function __construct() {
-		$this->extensions = apply_filters( 'wp2_register_identity_extensions', [] );
+		$this->extensions = apply_filters( 'wp2_register_identity_extensions', array() );
 	}
 
 	public function authenticate( $context ) {

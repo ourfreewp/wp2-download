@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || exit();
 ?>
 
-<?php if ( true ) : ?>
 	<div class="card p-3">
 		<div class="d-flex justify-content-between align-items-center mb-3">
 			<h5 class="mb-0">
@@ -64,4 +63,3 @@ defined( 'ABSPATH' ) || exit();
 			</table>
 		</div>
 	</div>
-<?php endif; ?>

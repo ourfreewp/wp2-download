@@ -48,7 +48,7 @@ class Site {
 			return; // not configured
 		}
 
-		$this->hub_url = untrailingslashit( (string) WP2_CONNECT_HUB_URL );
+		$this->hub_url            = untrailingslashit( (string) WP2_CONNECT_HUB_URL );
 		$this->registration_token = (string) WP2_CONNECT_REG_TOKEN;
 
 		// Ensure site is registered as early as possible in admin requests.
@@ -86,8 +86,8 @@ class Site {
 	public function register_site() {
 		$payload = [ 
 			'site' => home_url(),
-			'wp' => get_bloginfo( 'version' ),
-			'php' => PHP_VERSION,
+			'wp'   => get_bloginfo( 'version' ),
+			'php'  => PHP_VERSION,
 		];
 
 		$response = $this->post_json( '/sites/register', $payload, [ 
@@ -131,8 +131,8 @@ class Site {
 				return $transient;
 			}
 
-			$body = [ 'packages' => $packages ];
-			$resp = $this->post_json( '/updates/check-mirror', $body, [ 'X-WP2-Site-Api-Token' => $token ] );
+			$body               = [ 'packages' => $packages ];
+			$resp               = $this->post_json( '/updates/check-mirror', $body, [ 'X-WP2-Site-Api-Token' => $token ] );
 			$this->mirror_cache = is_array( $resp ) ? $resp : [];
 		}
 
@@ -153,13 +153,13 @@ class Site {
 					continue;
 				}
 
-				$plugin_basename = (string) $data['plugin']; // expected dir/file.php from hub
+				$plugin_basename                         = (string) $data['plugin']; // expected dir/file.php from hub
 				$transient->response[ $plugin_basename ] = (object) [ 
-					'slug' => sanitize_key( $slug ),
-					'plugin' => $plugin_basename,
+					'slug'        => sanitize_key( $slug ),
+					'plugin'      => $plugin_basename,
 					'new_version' => sanitize_text_field( (string) $data['new_version'] ),
-					'package' => esc_url_raw( (string) $data['package_url'] ),
-					'url' => esc_url_raw( (string) ( $data['url'] ?? home_url() ) ),
+					'package'     => esc_url_raw( (string) $data['package_url'] ),
+					'url'         => esc_url_raw( (string) ( $data['url'] ?? home_url() ) ),
 				];
 			}
 		}
@@ -176,10 +176,10 @@ class Site {
 					continue;
 				}
 				$transient->response[ $stylesheet ] = [ 
-					'theme' => sanitize_key( $stylesheet ),
+					'theme'       => sanitize_key( $stylesheet ),
 					'new_version' => sanitize_text_field( (string) $data['new_version'] ),
-					'package' => esc_url_raw( (string) $data['package_url'] ),
-					'url' => esc_url_raw( (string) ( $data['url'] ?? home_url() ) ),
+					'package'     => esc_url_raw( (string) $data['package_url'] ),
+					'url'         => esc_url_raw( (string) ( $data['url'] ?? home_url() ) ),
 				];
 			}
 		}
@@ -248,12 +248,12 @@ class Site {
 		}
 		$all_plugins = function_exists( 'get_plugins' ) ? get_plugins() : [];
 		foreach ( $all_plugins as $basename => $headers ) {
-			$version = isset( $headers['Version'] ) ? (string) $headers['Version'] : '0.0.0';
-			$slug = $this->plugin_slug_from_basename( $basename );
+			$version               = isset( $headers['Version'] ) ? (string) $headers['Version'] : '0.0.0';
+			$slug                  = $this->plugin_slug_from_basename( $basename );
 			$packages['plugins'][] = [ 
-				'type' => 'plugin',
-				'slug' => $slug,
-				'plugin' => $basename, // keep original for mapping back
+				'type'    => 'plugin',
+				'slug'    => $slug,
+				'plugin'  => $basename, // keep original for mapping back
 				'version' => $version,
 			];
 		}
@@ -262,8 +262,8 @@ class Site {
 		$themes = wp_get_themes();
 		foreach ( $themes as $stylesheet => $theme ) {
 			$packages['themes'][] = [ 
-				'type' => 'theme',
-				'slug' => (string) $stylesheet,
+				'type'    => 'theme',
+				'slug'    => (string) $stylesheet,
 				'version' => (string) $theme->get( 'Version' ),
 			];
 		}
@@ -280,17 +280,17 @@ class Site {
 	 */
 	private function post_json( $path, array $body, array $extra_headers = [] ) {
 		$timeout = defined( 'WP2_CONNECT_TIMEOUT' ) ? (int) WP2_CONNECT_TIMEOUT : 20;
-		$url = $this->hub_url . $path;
+		$url     = $this->hub_url . $path;
 		$headers = array_merge( [ 
-			'Accept' => 'application/json',
+			'Accept'       => 'application/json',
 			'Content-Type' => 'application/json; charset=utf-8',
-			'User-Agent' => 'WP2-Connect/' . get_bloginfo( 'version' ) . ' (' . home_url() . ')',
+			'User-Agent'   => 'WP2-Connect/' . get_bloginfo( 'version' ) . ' (' . home_url() . ')',
 		], $extra_headers );
 
 		$response = wp_remote_post( $url, [ 
 			'headers' => $headers,
 			'timeout' => $timeout,
-			'body' => wp_json_encode( $body ),
+			'body'    => wp_json_encode( $body ),
 		] );
 		if ( is_wp_error( $response ) ) {
 			return false;
@@ -310,7 +310,7 @@ class Site {
 	 */
 	private function is_hub_url( $url ) {
 		$hub = wp_parse_url( $this->hub_url );
-		$u = wp_parse_url( (string) $url );
+		$u   = wp_parse_url( (string) $url );
 		if ( empty( $hub['host'] ) || empty( $u['host'] ) ) {
 			return false;
 		}

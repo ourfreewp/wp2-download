@@ -5,7 +5,7 @@
  * @package WP2\Download
  */
 
-namespace WP2\Download\Origin\Adapters\Storage;
+namespace WP2\Download\Core\Origins\Adapters\Storage;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,33 +33,33 @@ class Adapter implements ConnectionInterface {
 	public function validate_source_ref( array $source_ref ): bool {
 		$key = isset( $source_ref['r2_key'] ) ? (string) $source_ref['r2_key'] : '';
 		if ( $key === '' ) {
-			$this->last_error = [ 'message' => 'Missing storage key (r2_key).' ];
+			$this->last_error = array( 'message' => 'Missing storage key (r2_key).' );
 			return false;
 		}
 		return true;
 	}
 
 	public function fetch_metadata( array $source_ref ): array {
-		return [ 
-			'name' => $source_ref['r2_key'] ?? '',
+		return array(
+			'name'        => $source_ref['r2_key'] ?? '',
 			'description' => '',
-			'links' => [],
-			'requires' => [],
-		];
+			'links'       => array(),
+			'requires'    => array(),
+		);
 	}
 
-	public function fetch_versions( array $source_ref, array $constraints = [] ): array {
+	public function fetch_versions( array $source_ref, array $constraints = array() ): array {
 		// For a single-key artifact, use explicit versions in path or metadata.
-		return [];
+		return array();
 	}
 
 	public function resolve_artifact( array $source_ref, string $version ): array {
 		// Presigning is done elsewhere; return a logical key and let the gateway handle URL creation.
-		return [ 
-			'url' => '',
-			'headers' => [],
+		return array(
+			'url'      => '',
+			'headers'  => array(),
 			'checksum' => '',
-		];
+		);
 	}
 
 	public function supports_mirror( array $source_ref ): bool {
