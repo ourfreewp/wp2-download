@@ -1,22 +1,7 @@
 <?php
-// -----------------------------------------------------------------------------
-// -----------------------------------------------------------------------------
-
 /**
- * wp2-update.php — WP2 Update SDK — Single-file drop-in for themes, plugins, and MU plugins.
- *
- * Usage:
- * 1) Define constants in wp-config.php:
- * define( 'WP2_HUB_URL',    'https://your-hub-domain.com/wp-json/wp2/v1' );
- * define( 'WP2_PUBLIC_KEY', '-----BEGIN PUBLIC KEY-----...-----END PUBLIC KEY-----' );
- * // Optional, if your hub requires it:
- * // define( 'WP2_AUTH_TOKEN', 'your-bearer-or-signed-token' );
- *
- * 2) Include this file from your theme/plugin/MU plugin.
- * 3) Instantiate and call ->init():
- * (themes) new \WP2\Update\Theme_Updater();
- * (plugins) new \WP2\Update\Plugin_Updater( __FILE__ );
- * (mu-plugins) new \WP2\Update\MU_Plugin_Updater( __FILE__ );
+ * 
+ * @package category WP2\Update
  */
 
 namespace WP2\Update;
@@ -47,8 +32,8 @@ class Api_Client {
 	 */
 	public function __construct( $hub_url, $slug, $type ) {
 		$this->hub_url = untrailingslashit( (string) $hub_url );
-		$this->slug = sanitize_key( (string) $slug );
-		$this->type = sanitize_key( (string) $type );
+		$this->slug    = sanitize_key( (string) $slug );
+		$this->type    = sanitize_key( (string) $type );
 	}
 
 	/**
@@ -57,7 +42,7 @@ class Api_Client {
 	 */
 	private function build_headers() {
 		$headers = [ 
-			'Accept' => 'application/json',
+			'Accept'     => 'application/json',
 			'User-Agent' => 'WP2-Update-SDK/' . get_bloginfo( 'version' ) . ' (' . home_url() . ')',
 		];
 
@@ -104,7 +89,7 @@ class Api_Client {
 	 */
 	public function get_manifest() {
 		$cache_key = 'wp2_manifest_' . md5( $this->slug . '|' . $this->type );
-		$cached = get_transient( $cache_key );
+		$cached    = get_transient( $cache_key );
 		if ( is_array( $cached ) ) {
 			return $cached;
 		}
@@ -113,8 +98,8 @@ class Api_Client {
 			'type' => $this->type,
 			'slug' => $this->slug,
 			'site' => home_url(),
-			'wp' => get_bloginfo( 'version' ),
-			'php' => PHP_VERSION,
+			'wp'   => get_bloginfo( 'version' ),
+			'php'  => PHP_VERSION,
 		];
 
 		$data = $this->get( '/manifest/' . rawurlencode( $this->type ) . '/' . rawurlencode( $this->slug ), $query );
@@ -133,19 +118,19 @@ class Api_Client {
 	 * @return void
 	 */
 	public function report_in( $version ) {
-		$url = $this->hub_url . '/report';
+		$url  = $this->hub_url . '/report';
 		$body = [ 
-			'slug' => $this->slug,
-			'type' => $this->type,
+			'slug'    => $this->slug,
+			'type'    => $this->type,
 			'version' => (string) $version,
-			'site' => home_url(),
-			'wp' => get_bloginfo( 'version' ),
-			'php' => PHP_VERSION,
+			'site'    => home_url(),
+			'wp'      => get_bloginfo( 'version' ),
+			'php'     => PHP_VERSION,
 		];
 		wp_remote_post( $url, [ 
 			'headers' => $this->build_headers(),
 			'timeout' => $this->timeout,
-			'body' => $body,
+			'body'    => $body,
 		] );
 	}
 
@@ -156,7 +141,7 @@ class Api_Client {
 	 */
 	public function is_hub_url( $url ) {
 		$hub = wp_parse_url( $this->hub_url );
-		$u = wp_parse_url( (string) $url );
+		$u   = wp_parse_url( (string) $url );
 		if ( empty( $hub['host'] ) || empty( $u['host'] ) ) {
 			return false;
 		}
@@ -187,7 +172,7 @@ class Signature_Verifier {
 		if ( ! $pub_key ) {
 			return false;
 		}
-		$sig = base64_decode( (string) $signature, true );
+		$sig    = base64_decode( (string) $signature, true );
 		$result = openssl_verify( $data, $sig, $pub_key, OPENSSL_ALGO_SHA256 );
 		if ( function_exists( 'openssl_free_key' ) ) {
 			openssl_free_key( $pub_key );
@@ -216,7 +201,7 @@ class Updater {
 	 * @param string $package_file Absolute path to the main file.
 	 */
 	public function __construct( $package_file ) {
-		$this->package_file = (string) $package_file;
+		$this->package_file       = (string) $package_file;
 		$this->signature_verifier = new Signature_Verifier();
 		$this->determine_package_type_and_slug();
 		if ( defined( 'WP2_HUB_URL' ) ) {
@@ -295,28 +280,28 @@ class Updater {
 		$current = $this->get_current_version();
 		if ( ! $current || version_compare( (string) $manifest['version'], (string) $current, '>' ) ) {
 			$download = esc_url_raw( (string) $manifest['download_url'] );
-			$home = ! empty( $manifest['homepage'] ) ? esc_url_raw( (string) $manifest['homepage'] ) : home_url();
+			$home     = ! empty( $manifest['homepage'] ) ? esc_url_raw( (string) $manifest['homepage'] ) : home_url();
 
 			if ( $this->package_type === 'theme' ) {
 				if ( ! isset( $transient->response ) ) {
 					$transient->response = [];
 				}
 				$transient->response[ $this->package_slug ] = [ 
-					'theme' => $this->package_slug,
+					'theme'       => $this->package_slug,
 					'new_version' => sanitize_text_field( (string) $manifest['version'] ),
-					'package' => $download,
-					'url' => $home,
+					'package'     => $download,
+					'url'         => $home,
 				];
 			} else {
 				if ( ! isset( $transient->response ) ) {
 					$transient->response = [];
 				}
 				$transient->response[ $this->package_slug ] = (object) [ 
-					'slug' => sanitize_text_field( $this->normalize_plugin_slug_for_api() ),
-					'plugin' => $this->package_slug,
+					'slug'        => sanitize_text_field( $this->normalize_plugin_slug_for_api() ),
+					'plugin'      => $this->package_slug,
 					'new_version' => sanitize_text_field( (string) $manifest['version'] ),
-					'package' => $download,
-					'url' => $home,
+					'package'     => $download,
+					'url'         => $home,
 				];
 			}
 		}
@@ -348,14 +333,14 @@ class Updater {
 		}
 
 		return (object) [ 
-			'name' => sanitize_text_field( $manifest['name'] ?? $this->package_slug ),
-			'slug' => $this->normalize_plugin_slug_for_api(),
-			'version' => sanitize_text_field( $manifest['version'] ?? '' ),
-			'author' => wp_kses_post( $manifest['author'] ?? '' ),
-			'homepage' => esc_url_raw( $manifest['homepage'] ?? '' ),
-			'sections' => [ 'changelog' => wp_kses_post( $manifest['changelog'] ?? '' ) ],
+			'name'          => sanitize_text_field( $manifest['name'] ?? $this->package_slug ),
+			'slug'          => $this->normalize_plugin_slug_for_api(),
+			'version'       => sanitize_text_field( $manifest['version'] ?? '' ),
+			'author'        => wp_kses_post( $manifest['author'] ?? '' ),
+			'homepage'      => esc_url_raw( $manifest['homepage'] ?? '' ),
+			'sections'      => [ 'changelog' => wp_kses_post( $manifest['changelog'] ?? '' ) ],
 			'download_link' => esc_url_raw( $manifest['download_url'] ?? '' ),
-			'external' => true,
+			'external'      => true,
 		];
 	}
 
@@ -586,57 +571,5 @@ class Updater {
 			}
 		}
 		@rmdir( $dir );
-	}
-}
-
-/**
- * Theme wrapper.
- */
-class Theme_Updater {
-	/** @var Updater */
-	private $updater;
-	public function __construct() {
-		$this->updater = new Updater( get_stylesheet_directory() . '/functions.php' );
-	}
-	public function init() {
-		$this->updater->init();
-	}
-}
-
-/**
- * Plugin wrapper.
- */
-class Plugin_Updater {
-	/** @var Updater */
-	private $updater;
-	/**
-	 * @param string $plugin_file __FILE__ of the main plugin file.
-	 */
-	public function __construct( $plugin_file ) {
-		$this->updater = new Updater( $plugin_file );
-	}
-	public function init() {
-		$this->updater->init();
-	}
-}
-
-/**
- * MU plugin wrapper (cron-based self-updates).
- */
-class MU_Plugin_Updater {
-	/** @var Updater */
-	private $updater;
-	/**
-	 * @param string $plugin_file __FILE__ of the MU plugin.
-	 */
-	public function __construct( $plugin_file ) {
-		$this->updater = new Updater( $plugin_file );
-	}
-	public function init() {
-		$this->updater->init(); // for shared hooks like auth headers, reporting
-		add_action( 'wp2_mu_plugin_update_check', [ $this->updater, 'check_for_updates' ] );
-		if ( ! wp_next_scheduled( 'wp2_mu_plugin_update_check' ) ) {
-			wp_schedule_event( time() + rand( 300, 1800 ), 'twicedaily', 'wp2_mu_plugin_update_check' );
-		}
 	}
 }

@@ -2,6 +2,7 @@
 // wp-content/mu-plugins/wp2-download/src/Admin/views/settings/storage.php
 defined( 'ABSPATH' ) || exit();
 use WP2\Download\Services\Locator;
+
 $storage_adapters = Locator::list_storage_adapters();
 $selected_storage = (string) get_option( 'wp2_download_storage_adapter', 'DefaultAdapter' );
 ?>

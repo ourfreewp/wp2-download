@@ -2,7 +2,8 @@
 // wp-content/mu-plugins/wp2-download/src/Admin/views/settings/development.php
 defined( 'ABSPATH' ) || exit();
 use WP2\Download\Services\Locator;
-$dev_adapters = Locator::list_development_adapters();
+
+$dev_adapters         = Locator::list_development_adapters();
 $selected_development = (string) get_option( 'wp2_download_development_adapter', 'DefaultAdapter' );
 ?>
 

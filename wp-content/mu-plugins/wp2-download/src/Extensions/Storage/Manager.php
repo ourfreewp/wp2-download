@@ -8,10 +8,10 @@ namespace WP2\Download\Extensions\Storage;
  * @note "Manages storage extensions and operations."
  */
 class Manager {
-	protected $extensions = [];
+	protected $extensions = array();
 
 	public function __construct() {
-		$this->extensions = apply_filters( 'wp2_register_storage_extensions', [] );
+		$this->extensions = apply_filters( 'wp2_register_storage_extensions', array() );
 	}
 
 	public function store( $context ) {

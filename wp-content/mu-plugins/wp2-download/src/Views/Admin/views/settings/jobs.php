@@ -1,4 +1,3 @@
-
 <?php
 use WP2\Download\Admin\Jobs;
 
@@ -8,8 +7,8 @@ if ( ! class_exists( '\WP2\Download\Admin\Jobs' ) ) {
 }
 
 $jobs_admin = new Jobs();
-$jobs = $jobs_admin->get_jobs();
-$statuses = $jobs_admin->get_statuses();
+$jobs       = $jobs_admin->get_jobs();
+$statuses   = $jobs_admin->get_statuses();
 
 // Handle drilldown (simple example, you may want to use GET params or AJAX for real implementation)
 $drilldown_job = null;
@@ -75,7 +74,7 @@ if ( isset( $_GET['job_id'] ) ) {
 						<td><?php echo ! empty( $job['scheduled_date_gmt'] ) ? esc_html( $job['scheduled_date_gmt'] ) : '-'; ?></td>
 						<td>
 							<a href="<?php echo esc_url( add_query_arg( 'job_id', $job['ID'] ) ); ?>" class="button"><?php esc_html_e( 'Details', 'wp2-download' ); ?></a>
-							<?php if ( in_array( $job['status'], [ 'pending', 'in-progress' ], true ) ) : ?>
+							<?php if ( in_array( $job['status'], array( 'pending', 'in-progress' ), true ) ) : ?>
 								<form method="post" style="display:inline;">
 									<input type="hidden" name="action_id" value="<?php echo esc_attr( $job['ID'] ); ?>" />
 									<input type="submit" name="unschedule_job" class="button" value="<?php esc_attr_e( 'Unschedule', 'wp2-download' ); ?>" />

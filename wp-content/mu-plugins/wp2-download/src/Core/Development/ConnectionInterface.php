@@ -1,5 +1,5 @@
 <?php
-namespace WP2\Download\Development;
+namespace WP2\Download\Core\Development;
 
 defined( 'ABSPATH' ) || exit();
 

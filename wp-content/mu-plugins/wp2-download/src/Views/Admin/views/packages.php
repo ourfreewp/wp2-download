@@ -3,6 +3,7 @@
  * Packages page wrapper and tab navigation.
  *
  * Variables provided by controller:
+ *
  * @var array  $tabs         Map of tab_key => [ 'label' => string, 'file' => string ].
  * @var string $current_tab  Current tab slug.
  * @var callable $build_tab_url function( string $tab ): string
@@ -22,7 +23,7 @@ defined( 'ABSPATH' ) || exit();
 		<h2 class="nav-tab-wrapper" role="tablist">
 			<?php foreach ( $tabs as $tab_key => $tab ) : ?>
 				<?php
-				$active = $current_tab === $tab_key ? ' nav-tab-active' : '';
+				$active   = $current_tab === $tab_key ? ' nav-tab-active' : '';
 				$tab_href = $build_tab_url( $tab_key );
 				?>
 				<a class="nav-tab<?php echo esc_attr( $active ); ?>" id="<?php echo esc_attr( 'tab-' . $tab_key ); ?>"

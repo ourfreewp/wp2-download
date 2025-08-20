@@ -8,10 +8,10 @@ namespace WP2\Download\Extensions\Licensing;
  * @note "Manages licensing extensions and validation."
  */
 class Manager {
-	protected $extensions = [];
+	protected $extensions = array();
 
 	public function __construct() {
-		$this->extensions = apply_filters( 'wp2_register_licensing_extensions', [] );
+		$this->extensions = apply_filters( 'wp2_register_licensing_extensions', array() );
 	}
 
 	public function validate_license( $context ) {

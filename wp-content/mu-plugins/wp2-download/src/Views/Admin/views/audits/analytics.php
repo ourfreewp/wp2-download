@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || exit();
 ?>
 
-<?php if ( true ) : ?>
 	<div class="card p-3">
 		<div class="d-flex justify-content-between align-items-center mb-3">
 			<h5 class="mb-0">
@@ -53,4 +52,3 @@ defined( 'ABSPATH' ) || exit();
 		<p><strong><?php echo esc_html__( 'Distinct ID:', 'wp2-download' ); ?></strong>
 			<?php echo esc_html( 'user_1234' ); ?></p>
 	</div>
-<?php endif; ?>

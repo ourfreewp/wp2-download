@@ -1,10 +1,10 @@
 <?php
 namespace WP2\Download\REST;
 
-use WP2\Download\REST\Releases\Controller as ReleasesController;
+use WP2\Download\REST\Client\Controller as ClientController;
 use WP2\Download\REST\Manifests\Controller as ManifestsController;
 use WP2\Download\REST\Packages\Controller as PackagesController;
-use WP2\Download\REST\Client\Controller as ClientController;
+use WP2\Download\REST\Releases\Controller as ReleasesController;
 use WP2\Download\REST\System\Controller as SystemController;
 use WP2\Download\REST\System\Health\Controller as HealthController;
 

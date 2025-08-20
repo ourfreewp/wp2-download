@@ -1,4 +1,3 @@
-<!-- Installation & Setup Modal -->
 <div class="modal fade" id="setupModal" tabindex="-1" aria-labelledby="setupModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-scrollable">
 		<div class="modal-content">

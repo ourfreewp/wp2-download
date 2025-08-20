@@ -5,7 +5,7 @@
  * @package WP2\Download
  */
 
-namespace WP2\Download\Origin\Adapters\GoogleDrive;
+namespace WP2\Download\Core\Origins\Adapters\GoogleDrive;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -33,32 +33,32 @@ class Adapter implements ConnectionInterface {
 	public function validate_source_ref( array $source_ref ): bool {
 		$file_id = isset( $source_ref['file_id'] ) ? (string) $source_ref['file_id'] : '';
 		if ( $file_id === '' ) {
-			$this->last_error = [ 'message' => 'Missing Google Drive file_id.' ];
+			$this->last_error = array( 'message' => 'Missing Google Drive file_id.' );
 			return false;
 		}
 		return true;
 	}
 
 	public function fetch_metadata( array $source_ref ): array {
-		return [ 
-			'name' => $source_ref['file_id'] ?? '',
+		return array(
+			'name'        => $source_ref['file_id'] ?? '',
 			'description' => '',
-			'links' => [],
-			'requires' => [],
-		];
+			'links'       => array(),
+			'requires'    => array(),
+		);
 	}
 
-	public function fetch_versions( array $source_ref, array $constraints = [] ): array {
+	public function fetch_versions( array $source_ref, array $constraints = array() ): array {
 		// Drive files may not expose semantic versions; surface a single logical "current".
-		return [ 'current' ];
+		return array( 'current' );
 	}
 
 	public function resolve_artifact( array $source_ref, string $version ): array {
-		return [ 
-			'url' => '',
-			'headers' => [],
+		return array(
+			'url'      => '',
+			'headers'  => array(),
 			'checksum' => '',
-		];
+		);
 	}
 
 	public function supports_mirror( array $source_ref ): bool {

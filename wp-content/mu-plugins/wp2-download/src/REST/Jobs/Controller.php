@@ -16,21 +16,33 @@ class Controller {
 	 * Register REST routes.
 	 */
 	public function register_routes() {
-		register_rest_route( 'wp2-download/v1', '/jobs', [ 
-			'methods' => 'GET',
-			'callback' => [ $this, 'get_jobs' ],
-			'permission_callback' => [ $this, 'permissions' ],
-		] );
-		register_rest_route( 'wp2-download/v1', '/jobs/(?P<id>\\d+)', [ 
-			'methods' => 'GET',
-			'callback' => [ $this, 'get_job' ],
-			'permission_callback' => [ $this, 'permissions' ],
-		] );
-		register_rest_route( 'wp2-download/v1', '/jobs/(?P<id>\\d+)/unschedule', [ 
-			'methods' => 'POST',
-			'callback' => [ $this, 'unschedule_job' ],
-			'permission_callback' => [ $this, 'permissions' ],
-		] );
+		register_rest_route(
+			'wp2-download/v1',
+			'/jobs',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'get_jobs' ),
+				'permission_callback' => array( $this, 'permissions' ),
+			)
+		);
+		register_rest_route(
+			'wp2-download/v1',
+			'/jobs/(?P<id>\\d+)',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'get_job' ),
+				'permission_callback' => array( $this, 'permissions' ),
+			)
+		);
+		register_rest_route(
+			'wp2-download/v1',
+			'/jobs/(?P<id>\\d+)/unschedule',
+			array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'unschedule_job' ),
+				'permission_callback' => array( $this, 'permissions' ),
+			)
+		);
 	}
 
 	/**
@@ -45,7 +57,7 @@ class Controller {
 	 */
 	public function get_jobs( $request ) {
 		$jobs_admin = new Jobs();
-		$args = [];
+		$args       = array();
 		if ( $request->get_param( 'status' ) ) {
 			$args['status'] = $request->get_param( 'status' );
 		}
@@ -60,9 +72,9 @@ class Controller {
 	 * Get a single job, with drilldown to package/adapter if present.
 	 */
 	public function get_job( $request ) {
-		$id = (int) $request['id'];
+		$id         = (int) $request['id'];
 		$jobs_admin = new Jobs();
-		$jobs = $jobs_admin->get_jobs();
+		$jobs       = $jobs_admin->get_jobs();
 		foreach ( $jobs as $job ) {
 			if ( $job['ID'] == $id ) {
 				$response = $job;
@@ -76,19 +88,19 @@ class Controller {
 				return rest_ensure_response( $response );
 			}
 		}
-		return new \WP_Error( 'not_found', 'Job not found', [ 'status' => 404 ] );
+		return new \WP_Error( 'not_found', 'Job not found', array( 'status' => 404 ) );
 	}
 
 	/**
 	 * Unschedule a job.
 	 */
 	public function unschedule_job( $request ) {
-		$id = (int) $request['id'];
+		$id         = (int) $request['id'];
 		$jobs_admin = new Jobs();
-		$success = $jobs_admin->unschedule_job( $id );
+		$success    = $jobs_admin->unschedule_job( $id );
 		if ( $success ) {
-			return rest_ensure_response( [ 'success' => true ] );
+			return rest_ensure_response( array( 'success' => true ) );
 		}
-		return new \WP_Error( 'unschedule_failed', 'Could not unschedule job', [ 'status' => 400 ] );
+		return new \WP_Error( 'unschedule_failed', 'Could not unschedule job', array( 'status' => 400 ) );
 	}
 }

@@ -2,6 +2,7 @@
 // wp-content/mu-plugins/wp2-download/src/Admin/views/settings/licensing.php
 defined( 'ABSPATH' ) || exit();
 use WP2\Download\Services\Locator;
+
 $licensing_adapters = Locator::list_licensing_adapters();
 $selected_licensing = (string) get_option( 'wp2_download_licensing_adapter', 'DefaultAdapter' );
 ?>

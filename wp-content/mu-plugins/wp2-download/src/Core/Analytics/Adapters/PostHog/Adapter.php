@@ -1,6 +1,6 @@
 <?php
 // wp-content/mu-plugins/wp2-download/src/Analytics/Adapters/PostHogAdapter.php
-namespace WP2\Download\Analytics\Adapters\PostHog;
+namespace WP2\Download\Core\Analytics\Adapters\PostHog;
 
 defined( 'ABSPATH' ) || exit();
 
@@ -26,7 +26,7 @@ class Adapter implements ConnectionInterface {
 	/**
 	 * @param array $config Optional config: api_key, host, timeout.
 	 */
-	public function __construct( array $config = [] ) {
+	public function __construct( array $config = array() ) {
 		if ( isset( $config['api_key'] ) ) {
 			$this->api_key = (string) $config['api_key'];
 		} elseif ( defined( 'WP2_POSTHOG_KEY' ) ) {
@@ -54,7 +54,7 @@ class Adapter implements ConnectionInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function track_event( string $event_name, array $properties = [] ): void {
+	public function track_event( string $event_name, array $properties = array() ): void {
 		if ( ! $this->connect() ) {
 			return;
 		}
@@ -68,25 +68,25 @@ class Adapter implements ConnectionInterface {
 			$distinct_id = (string) wp_parse_url( home_url(), PHP_URL_HOST );
 		}
 
-		$body = [ 
-			'api_key' => $this->api_key,
-			'event' => sanitize_text_field( $event_name ),
+		$body = array(
+			'api_key'     => $this->api_key,
+			'event'       => sanitize_text_field( $event_name ),
 			'distinct_id' => $distinct_id,
-			'properties' => $properties,
-		];
+			'properties'  => $properties,
+		);
 
-		$args = [ 
-			'method' => 'POST',
-			'timeout' => $this->timeout,
-			'headers' => [ 
+		$args = array(
+			'method'      => 'POST',
+			'timeout'     => $this->timeout,
+			'headers'     => array(
 				'Content-Type' => 'application/json',
-			],
-			'body' => wp_json_encode( $body ),
+			),
+			'body'        => wp_json_encode( $body ),
 			'data_format' => 'body',
-			'blocking' => false, // fire-and-forget
-		];
+			'blocking'    => false, // fire-and-forget
+		);
 
-		$url = rtrim( $this->host, '/' ) . '/capture/';
+		$url      = rtrim( $this->host, '/' ) . '/capture/';
 		$response = wp_remote_post( $url, $args );
 
 		if ( is_wp_error( $response ) ) {

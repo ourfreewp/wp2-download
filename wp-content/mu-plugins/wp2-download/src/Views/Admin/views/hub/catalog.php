@@ -1,8 +1,10 @@
 <?php
-
-
+/**
+ * Catalog view for WP2 Download admin hub.
+ *
+ * @package WP2Download
+ */
 ?>
-
 <div class="wp2-hub-catalog">
 	<div class="d-flex justify-content-between align-items-center">
 		<h5>Package Catalog</h5>
@@ -31,18 +33,18 @@
 				<?php else : ?>
 					<?php foreach ( $packages as $package ) : ?>
 						<?php
-						$repo = \WP2\Download\API\Packages\Controller::get_repo_data( $package );
+						$repo    = \WP2\Download\API\Packages\Controller::get_repo_data( $package );
 						$storage = \WP2\Download\API\Packages\Controller::get_storage_data( $package );
 						$storage = \WP2\Download\API\Packages\Controller::get_licensing_data( $package );
 						$storage = \WP2\Download\API\Packages\Controller::get_analytics_data( $package );
-						$health = \WP2\Download\API\Packages\Controller::get_health_data( $package );
+						$health  = \WP2\Download\API\Packages\Controller::get_health_data( $package );
 						?>
 						<tr>
 							<td class="wp2-hub-td-name">
-								<?php echo htmlspecialchars( $package['name'] ?? '', ENT_QUOTES, 'UTF-8' ); ?>
+								<?php echo esc_html( $package['name'] ?? '' ); ?>
 							</td>
 							<td class="wp2-hub-td-type">
-								<?php echo htmlspecialchars( $package['type'] ?? '', ENT_QUOTES, 'UTF-8' ); ?>
+								<?php echo esc_html( $package['type'] ?? '' ); ?>
 							</td>
 							<td class="wp2-hub-td-development">
 
@@ -58,9 +60,9 @@
 							</td>
 							<td class="wp2-hub-td-actions">
 								<button class="button button-secondary details-btn"
-									data-slug="<?php echo htmlspecialchars( $package['slug'] ?? '', ENT_QUOTES, 'UTF-8' ); ?>"
-									data-package="<?php echo htmlspecialchars( json_encode( $package ), ENT_QUOTES, 'UTF-8' ); ?>"
-									data-bs-toggle="modal" data-bs-target="#packageDetailsModal">Details</button>
+									data-slug="<?php echo esc_attr( $package['slug'] ?? '' ); ?>"
+									data-package="<?php echo esc_attr( wp_json_encode( $package ) ); ?>" data-bs-toggle="modal"
+									data-bs-target="#packageDetailsModal">Details</button>
 
 
 							</td>

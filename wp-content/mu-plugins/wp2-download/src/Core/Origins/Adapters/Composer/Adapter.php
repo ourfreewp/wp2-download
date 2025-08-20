@@ -5,7 +5,7 @@
  * @package WP2\Download
  */
 
-namespace WP2\Download\Origin\Adapters\Composer;
+namespace WP2\Download\Core\Origins\Adapters\Composer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -42,7 +42,7 @@ class Adapter implements ConnectionInterface {
 	public function validate_source_ref( array $source_ref ): bool {
 		$pkg = isset( $source_ref['package'] ) ? (string) $source_ref['package'] : '';
 		if ( $pkg === '' || ! preg_match( '/^[a-z0-9._-]+\/[a-z0-9._-]+$/', $pkg ) ) {
-			$this->last_error = [ 'message' => 'Invalid composer package name.' ];
+			$this->last_error = array( 'message' => 'Invalid composer package name.' );
 			return false;
 		}
 		return true;
@@ -53,20 +53,20 @@ class Adapter implements ConnectionInterface {
 	 */
 	public function fetch_metadata( array $source_ref ): array {
 		// Placeholder: return normalized metadata shape.
-		return [ 
-			'name' => $source_ref['package'] ?? '',
+		return array(
+			'name'        => $source_ref['package'] ?? '',
 			'description' => '',
-			'links' => [],
-			'requires' => [],
-		];
+			'links'       => array(),
+			'requires'    => array(),
+		);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function fetch_versions( array $source_ref, array $constraints = [] ): array {
+	public function fetch_versions( array $source_ref, array $constraints = array() ): array {
 		// Placeholder: newest-first list.
-		return [];
+		return array();
 	}
 
 	/**
@@ -74,11 +74,11 @@ class Adapter implements ConnectionInterface {
 	 */
 	public function resolve_artifact( array $source_ref, string $version ): array {
 		// Placeholder: dist URL + checksum if available.
-		return [ 
-			'url' => '',
-			'headers' => [],
+		return array(
+			'url'      => '',
+			'headers'  => array(),
 			'checksum' => '',
-		];
+		);
 	}
 
 	/**

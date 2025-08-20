@@ -13,13 +13,13 @@ class Manager {
 	/**
 	 * Get scheduled actions.
 	 *
-	 * @param array $args Arguments for as_get_scheduled_actions.
+	 * @param array  $args Arguments for as_get_scheduled_actions.
 	 * @param string $return_format Format: OBJECT, ARRAY_A, or ids.
 	 * @return array
 	 */
-	public function get_scheduled_actions( array $args = [], string $return_format = 'OBJECT' ): array {
+	public function get_scheduled_actions( array $args = array(), string $return_format = 'OBJECT' ): array {
 		if ( ! did_action( 'action_scheduler_init' ) ) {
-			return [];
+			return array();
 		}
 		return as_get_scheduled_actions( $args, $return_format );
 	}
@@ -27,7 +27,7 @@ class Manager {
 	/**
 	 * Schedule a single action.
 	 */
-	public function schedule_single_action( int $timestamp, string $hook, array $args = [], string $group = '', bool $unique = false, int $priority = 10 ): int {
+	public function schedule_single_action( int $timestamp, string $hook, array $args = array(), string $group = '', bool $unique = false, int $priority = 10 ): int {
 		if ( ! did_action( 'action_scheduler_init' ) ) {
 			return 0;
 		}
@@ -37,7 +37,7 @@ class Manager {
 	/**
 	 * Schedule a recurring action.
 	 */
-	public function schedule_recurring_action( int $timestamp, int $interval, string $hook, array $args = [], string $group = '', bool $unique = false, int $priority = 10 ): int {
+	public function schedule_recurring_action( int $timestamp, int $interval, string $hook, array $args = array(), string $group = '', bool $unique = false, int $priority = 10 ): int {
 		if ( ! did_action( 'action_scheduler_init' ) ) {
 			return 0;
 		}
@@ -47,7 +47,7 @@ class Manager {
 	/**
 	 * Schedule a cron action.
 	 */
-	public function schedule_cron_action( int $timestamp, string $schedule, string $hook, array $args = [], string $group = '', bool $unique = false, int $priority = 10 ): int {
+	public function schedule_cron_action( int $timestamp, string $schedule, string $hook, array $args = array(), string $group = '', bool $unique = false, int $priority = 10 ): int {
 		if ( ! did_action( 'action_scheduler_init' ) ) {
 			return 0;
 		}
@@ -57,7 +57,7 @@ class Manager {
 	/**
 	 * Enqueue an async action.
 	 */
-	public function enqueue_async_action( string $hook, array $args = [], string $group = '', bool $unique = false, int $priority = 10 ): int {
+	public function enqueue_async_action( string $hook, array $args = array(), string $group = '', bool $unique = false, int $priority = 10 ): int {
 		if ( ! did_action( 'action_scheduler_init' ) ) {
 			return 0;
 		}
@@ -67,7 +67,7 @@ class Manager {
 	/**
 	 * Unschedule the next occurrence of an action.
 	 */
-	public function unschedule_action( string $hook, array $args = [], string $group = '' ): void {
+	public function unschedule_action( string $hook, array $args = array(), string $group = '' ): void {
 		if ( ! did_action( 'action_scheduler_init' ) ) {
 			return;
 		}
@@ -77,7 +77,7 @@ class Manager {
 	/**
 	 * Unschedule all occurrences of an action.
 	 */
-	public function unschedule_all_actions( string $hook, array $args = [], string $group = '' ) {
+	public function unschedule_all_actions( string $hook, array $args = array(), string $group = '' ) {
 		if ( ! did_action( 'action_scheduler_init' ) ) {
 			return null;
 		}
@@ -87,7 +87,7 @@ class Manager {
 	/**
 	 * Get the next scheduled timestamp for an action.
 	 */
-	public function next_scheduled_action( string $hook, array $args = [], string $group = '' ) {
+	public function next_scheduled_action( string $hook, array $args = array(), string $group = '' ) {
 		if ( ! did_action( 'action_scheduler_init' ) ) {
 			return false;
 		}
@@ -97,7 +97,7 @@ class Manager {
 	/**
 	 * Check if an action is scheduled.
 	 */
-	public function has_scheduled_action( string $hook, array $args = [], string $group = '' ): bool {
+	public function has_scheduled_action( string $hook, array $args = array(), string $group = '' ): bool {
 		if ( ! did_action( 'action_scheduler_init' ) ) {
 			return false;
 		}

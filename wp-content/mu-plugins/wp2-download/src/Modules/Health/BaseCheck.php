@@ -1,11 +1,23 @@
 <?php
-namespace WP2\Download\Modules\Health;
-
 /**
+ * Base class for health checks on package posts.
+ *
  * @component_id health_base_check
  * @namespace health
  * @type Abstract
  * @note "Abstract base class for health checks on package posts."
+ *
+ * @package wp2-download
+ */
+
+namespace WP2\Download\Modules\Health;
+
+/**
+ * Abstract base class for health checks on package posts.
+ *
+ * Provides common methods for running health checks and managing post meta.
+ *
+ * @package wp2-download
  */
 abstract class BaseCheck implements CheckInterface {
 	/**
@@ -15,25 +27,27 @@ abstract class BaseCheck implements CheckInterface {
 
 	/**
 	 * Run the health check for a package post.
+	 *
 	 * @param \WP_Post $package_post
-	 * @param bool $force
+	 * @param bool     $force
 	 * @return array|null
 	 */
 	public function run( \WP_Post $package_post, bool $force = false ) {
 		$this->package_post = $package_post;
 		try {
 			return $this->perform_check( $force );
-		} catch (\Throwable $e) {
-			return [ 
-				'status' => 'error',
+		} catch ( \Throwable $e ) {
+			return array(
+				'status'  => 'error',
 				'message' => 'Health check exception: ' . $e->getMessage(),
-				'details' => [ 'exception' => get_class( $e ) ]
-			];
+				'details' => array( 'exception' => get_class( $e ) ),
+			);
 		}
 	}
 
 	/**
 	 * Perform the health check. Must be implemented by subclasses.
+	 *
 	 * @param bool $force
 	 * @return array|null
 	 */
@@ -41,8 +55,9 @@ abstract class BaseCheck implements CheckInterface {
 
 	/**
 	 * Get post meta for the package post.
+	 *
 	 * @param string $key
-	 * @param bool $single
+	 * @param bool   $single
 	 * @return mixed|null
 	 */
 	protected function get_meta( string $key, bool $single = true ) {
@@ -54,8 +69,9 @@ abstract class BaseCheck implements CheckInterface {
 
 	/**
 	 * Update post meta for the package post.
+	 *
 	 * @param string $key
-	 * @param mixed $value
+	 * @param mixed  $value
 	 * @return bool
 	 */
 	protected function update_meta( string $key, $value ) {
@@ -65,4 +81,3 @@ abstract class BaseCheck implements CheckInterface {
 		return update_post_meta( $this->package_post->ID, $key, $value );
 	}
 }
-

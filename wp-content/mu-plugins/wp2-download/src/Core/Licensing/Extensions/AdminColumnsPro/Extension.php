@@ -1,5 +1,5 @@
 <?php
-namespace WP2\Download\Licensing\Extensions\AdminColumnsPro;
+namespace WP2\Download\Core\Licensing\Extensions\AdminColumnsPro;
 
 /**
  * @component_id licensing_admincolumnspro_extension
@@ -10,6 +10,7 @@ namespace WP2\Download\Licensing\Extensions\AdminColumnsPro;
 class Extension {
 	/**
 	 * Hooked into wp2_run_vendor_activation.
+	 *
 	 * @param array $context
 	 * @return bool
 	 */
@@ -23,7 +24,7 @@ class Extension {
 // Register the handler with the pipeline.
 add_filter(
 	'wp2_run_vendor_activation',
-	[ new Extension(), 'activate_license' ],
+	array( new Extension(), 'activate_license' ),
 	10,
 	2
 );

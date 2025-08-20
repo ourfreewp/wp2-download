@@ -1,5 +1,5 @@
 <?php
-namespace WP2\Download\Storage\Adapters\Default;
+namespace WP2\Download\Core\Storage\Adapters\Default;
 
 use WP2\Download\Storage\ConnectionInterface;
 

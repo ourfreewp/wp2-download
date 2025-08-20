@@ -1,6 +1,6 @@
 <?php
 // wp-content/mu-plugins/wp2-download/src/Licensing/ConnectionInterface.php
-namespace WP2\Download\Licensing;
+namespace WP2\Download\Core\Licensing;
 
 defined( 'ABSPATH' ) || exit();
 

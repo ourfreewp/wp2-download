@@ -4,13 +4,7 @@ namespace WP2\Download\Services;
 
 defined( 'ABSPATH' ) || exit();
 
-
 use WP2\Download\Origin\Adapters\ConnectionInterface;
-use WP2\Download\Origin\Adapters\Composer\Adapter as ComposerAdapter;
-use WP2\Download\Origin\Adapters\Github\Adapter as GithubAdapter;
-use WP2\Download\Origin\Adapters\GoogleDrive\Adapter as GoogleDriveAdapter;
-use WP2\Download\Origin\Adapters\Storage\Adapter as StorageAdapter;
-use WP2\Download\Origin\Adapters\WP\Adapter as WPAdapter;
 
 /**
  * @component_id services_locator
@@ -19,12 +13,12 @@ use WP2\Download\Origin\Adapters\WP\Adapter as WPAdapter;
  * @note "Service locator for adapters and origins."
  */
 class Locator {
-	private static $health_runner = null;
-	protected static array $origins = [];
+	private static $health_runner   = null;
+	protected static array $origins = array();
 
 	// Adapter logic
 	private static function scan_adapter_dir( string $dir ): array {
-		$adapters = [];
+		$adapters = array();
 		if ( is_dir( $dir ) ) {
 			foreach ( glob( $dir . '/*Adapter.php' ) as $file ) {
 				$adapters[] = basename( $file, '.php' );
@@ -39,44 +33,44 @@ class Locator {
 			$dir = WP2_DOWNLOAD_PATH . '/src/Storage/Adapters';
 			return self::scan_adapter_dir( $dir );
 		}
-		return [];
+		return array();
 	}
 	public static function list_development_adapters(): array {
 		if ( defined( 'WP2_DOWNLOAD_PATH' ) ) {
 			$dir = WP2_DOWNLOAD_PATH . '/src/Development/Adapters';
 			return self::scan_adapter_dir( $dir );
 		}
-		return [];
+		return array();
 	}
 	public static function list_licensing_adapters(): array {
 		if ( defined( 'WP2_DOWNLOAD_PATH' ) ) {
 			$dir = WP2_DOWNLOAD_PATH . '/src/Licensing/Adapters';
 			return self::scan_adapter_dir( $dir );
 		}
-		return [];
+		return array();
 	}
 	public static function list_analytics_adapters(): array {
 		if ( defined( 'WP2_DOWNLOAD_PATH' ) ) {
 			$dir = WP2_DOWNLOAD_PATH . '/src/Analytics/Adapters';
 			return self::scan_adapter_dir( $dir );
 		}
-		return [];
+		return array();
 	}
 
 	public static function get_selected_adapter_slug( string $service ): string {
 		$option_key = 'wp2_download_' . $service . '_adapter';
-		$val = get_option( $option_key );
+		$val        = get_option( $option_key );
 		return ( is_string( $val ) && $val !== '' ) ? $val : 'unset';
 	}
 
 	private static function build_adapter_fqcn( string $service, string $adapter_slug ): string {
-		$namespace_map = [ 
-			'analytics' => '\\WP2\\Download\\Analytics\\Adapters',
-			'licensing' => '\\WP2\\Download\\Licensing\\Adapters',
-			'storage' => '\\WP2\\Download\\Storage\\Adapters',
+		$namespace_map = array(
+			'analytics'   => '\\WP2\\Download\\Analytics\\Adapters',
+			'licensing'   => '\\WP2\\Download\\Licensing\\Adapters',
+			'storage'     => '\\WP2\\Download\\Storage\\Adapters',
 			'development' => '\\WP2\\Download\\Development\\Adapters',
-		];
-		$ns = $namespace_map[ $service ] ?? '';
+		);
+		$ns            = $namespace_map[ $service ] ?? '';
 		return $ns . '\\' . $adapter_slug;
 	}
 
@@ -123,19 +117,19 @@ class Locator {
 
 	// Origin logic
 	public static function list_origin_kinds(): array {
-		$kinds = [ 'composer', 'github', 'gdrive', 'storage', 'wporg' ];
+		$kinds = array( 'composer', 'github', 'gdrive', 'storage', 'wporg' );
 		sort( $kinds, SORT_STRING );
 		return $kinds;
 	}
 
 	private static function build_origin_fqcn( string $kind ): string {
-		$map = [ 
+		$map = array(
 			'composer' => '\\WP2\\Download\\Origin\\Adapters\\Composer\\Adapter',
-			'github' => '\\WP2\\Download\\Origin\\Adapters\\Github\\Adapter',
-			'gdrive' => '\\WP2\\Download\\Origin\\Adapters\\GoogleDrive\\Adapter',
-			'storage' => '\\WP2\\Download\\Origin\\Adapters\\Storage\\Adapter',
-			'wporg' => '\\WP2\\Download\\Origin\\Adapters\\WP\\Adapter',
-		];
+			'github'   => '\\WP2\\Download\\Origin\\Adapters\\Github\\Adapter',
+			'gdrive'   => '\\WP2\\Download\\Origin\\Adapters\\GoogleDrive\\Adapter',
+			'storage'  => '\\WP2\\Download\\Origin\\Adapters\\Storage\\Adapter',
+			'wporg'    => '\\WP2\\Download\\Origin\\Adapters\\WP\\Adapter',
+		);
 		return $map[ $kind ] ?? '';
 	}
 
@@ -161,13 +155,13 @@ class Locator {
 	}
 
 	public static function register_default_origins(): void {
-		self::$origins = [ 
+		self::$origins = array(
 			'composer' => new \WP2\Download\Origin\Adapters\Composer\Adapter(),
-			'github' => new \WP2\Download\Origin\Adapters\Github\Adapter(),
-			'gdrive' => new \WP2\Download\Origin\Adapters\GoogleDrive\Adapter(),
-			'storage' => new \WP2\Download\Origin\Adapters\Storage\Adapter(),
-			'wporg' => new \WP2\Download\Origin\Adapters\WP\Adapter(),
-		];
+			'github'   => new \WP2\Download\Origin\Adapters\Github\Adapter(),
+			'gdrive'   => new \WP2\Download\Origin\Adapters\GoogleDrive\Adapter(),
+			'storage'  => new \WP2\Download\Origin\Adapters\Storage\Adapter(),
+			'wporg'    => new \WP2\Download\Origin\Adapters\WP\Adapter(),
+		);
 	}
 
 	public static function get_health_runner() {

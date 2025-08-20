@@ -1,6 +1,6 @@
 <?php
 // wp-content/mu-plugins/wp2-download/src/Analytics/ConnectionInterface.php
-namespace WP2\Download\Analytics;
+namespace WP2\Download\Core\Analytics;
 
 defined( 'ABSPATH' ) || exit();
 
@@ -23,8 +23,8 @@ interface ConnectionInterface {
 	 * Track an analytics event.
 	 *
 	 * @param string $event_name
-	 * @param array $properties
+	 * @param array  $properties
 	 * @return void
 	 */
-	public function track_event( string $event_name, array $properties = [] ): void;
+	public function track_event( string $event_name, array $properties = array() ): void;
 }

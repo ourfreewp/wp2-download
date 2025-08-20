@@ -1,11 +1,11 @@
 <?php
 
-namespace WP2\Download\Health;
+namespace WP2\Download\Modules\Health;
 
+use WP2\Download\Modules\Health\Checks\CloudflareR2\ArtifactCheck;
+use WP2\Download\Modules\Health\Checks\Github\RepoCheck;
+use WP2\Download\Modules\Health\Checks\Github\TagCheck;
 use WP2\Download\Services\Locator;
-use WP2\Download\Health\Checks\Github\RepoCheck;
-use WP2\Download\Health\Checks\Github\TagCheck;
-use WP2\Download\Health\Checks\CloudflareR2\ArtifactCheck;
 
 /**
  * @component_id health_init

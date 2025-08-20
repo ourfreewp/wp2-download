@@ -17,6 +17,7 @@ use WP2\Download\Archi\Helpers;
 class PHPDoc {
 	/**
 	 * Scan PHP files in the given directory for PHPDoc component annotations and register them.
+	 *
 	 * @param string $directory
 	 */
 	public static function registerComponentsFromPHPDoc( string $directory ): void {
@@ -33,11 +34,12 @@ class PHPDoc {
 	 * Get all PHP files recursively in a directory.
 	 */
 	private static function getPhpFiles( string $directory ): array {
-		$rii = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $directory ) );
-		$files = [];
+		$rii   = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $directory ) );
+		$files = array();
 		foreach ( $rii as $file ) {
-			if ( $file->isDir() )
+			if ( $file->isDir() ) {
 				continue;
+			}
 			if ( strtolower( $file->getExtension() ) === 'php' ) {
 				$files[] = $file->getPathname();
 			}
@@ -51,10 +53,10 @@ class PHPDoc {
 	 */
 	private static function parseFileForComponents( string $file ): array {
 		$contents = file_get_contents( $file );
-		$matches = [];
+		$matches  = array();
 		// Match PHPDoc blocks with @component_id
 		preg_match_all( '/\/\*\*([\s\S]*?)\*\//', $contents, $matches );
-		$components = [];
+		$components = array();
 		foreach ( $matches[1] as $block ) {
 			if ( strpos( $block, '@component_id' ) !== false ) {
 				$component = self::parseComponentBlock( $block );
@@ -74,24 +76,29 @@ class PHPDoc {
 	 */
 	private static function parseComponentBlock( string $block ): ?array {
 		// Preprocess block: remove leading '*' and whitespace from each line
-		$lines = explode( "\n", $block );
+		$lines       = explode( "\n", $block );
 		$clean_block = '';
 		foreach ( $lines as $line ) {
 			$clean_block .= preg_replace( '/^\s*\*?\s?/', '', $line ) . "\n";
 		}
 
-		$component = [];
+		$component = array();
 		// Simple regex for each field
-		foreach ( [ 
-			'component_id', 'namespace', 'type', 'title', 'note', 'url'
-		] as $field ) {
+		foreach ( array(
+			'component_id',
+			'namespace',
+			'type',
+			'title',
+			'note',
+			'url',
+		) as $field ) {
 			if ( preg_match( '/@' . $field . '\s+([^\n]*)/', $clean_block, $m ) ) {
 				$component[ $field ] = trim( $m[1] );
 			}
 		}
 
 		// Facets: support both array and individual @facet lines
-		$component['facets'] = [];
+		$component['facets'] = array();
 		// Array-style facets
 		if ( preg_match( '/@facets\s+(\[.*?\])/ms', $clean_block, $m ) ) {
 			$facets = json_decode( $m[1], true );
@@ -110,7 +117,7 @@ class PHPDoc {
 		}
 
 		// Relations: support both array and individual @relation lines
-		$component['relations'] = [];
+		$component['relations'] = array();
 		// Array-style relations
 		if ( preg_match( '/@relations\s+(\[.*?\])/ms', $clean_block, $m ) ) {
 			$relations = json_decode( $m[1], true );

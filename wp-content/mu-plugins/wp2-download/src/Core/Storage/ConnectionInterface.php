@@ -1,6 +1,6 @@
 <?php
 // wp-content/mu-plugins/wp2-download/src/Storage/ConnectionInterface.php
-namespace WP2\Download\Storage;
+namespace WP2\Download\Core\Storage;
 
 defined( 'ABSPATH' ) || exit();
 
