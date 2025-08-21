@@ -4,7 +4,9 @@
 	"type": "project",
 	"require": {
 		"php": ">=8.0",
-		"aws/aws-sdk-php": "^3.200"
+		"aws/aws-sdk-php": "^3.200",
+		"symfony/string": "^7.3",
+		"myclabs/deep-copy": "^1.13"
 	},
 	"autoload": {
 		"psr-4": {

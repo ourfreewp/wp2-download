@@ -23,6 +23,7 @@ class Init
      */
     public static function init(): void
     {
+        error_log('[WP2][DEBUG] Services Init');
         add_action(
             'admin_init',
             static function (): void {
