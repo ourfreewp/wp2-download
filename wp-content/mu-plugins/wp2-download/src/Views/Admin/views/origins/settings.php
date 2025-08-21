@@ -1,5 +1,8 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/origins/settings.php
+/**
+ * Settings for origin types.
+ */
+
 defined( 'ABSPATH' ) || exit();
 ?>
 

@@ -1,5 +1,10 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/origins/storage.php
+/**
+ * Storage origin settings view.
+ *
+ * @package WP2 Download
+ */
+
 defined( 'ABSPATH' ) || exit();
 ?>
 

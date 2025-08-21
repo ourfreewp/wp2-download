@@ -1,3 +1,13 @@
+<?php
+/**
+ * Setup modal admin view.
+ *
+ * @package WP2_Download
+ */
+
+defined( 'ABSPATH' ) || exit();
+?>
+
 <div class="modal fade" id="setupModal" tabindex="-1" aria-labelledby="setupModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-scrollable">
 		<div class="modal-content">

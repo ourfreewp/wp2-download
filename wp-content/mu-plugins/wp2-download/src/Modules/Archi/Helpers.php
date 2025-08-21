@@ -1,8 +1,14 @@
 <?php
+
+/**
+ * Summary of namespace WP2\Download\Modules\Archi
+ */
+
 namespace WP2\Download\Modules\Archi;
 
-defined( 'ABSPATH' ) || exit;
 /**
+ * Helper utilities for WP2 Archi.
+ *
  * @component_id helpers
  * @namespace archi
  * @type Utility

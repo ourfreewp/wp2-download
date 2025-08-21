@@ -1,15 +1,24 @@
 <?php
+/**
+ * Table rendering helper.
+ *
+ * @package WP2_Download
+ */
+
 namespace WP2\Download\Helpers\Table;
 
 use WP_List_Table;
 
 /**
+ * Table rendering helper.
+ *
  * @component_id helpers_render_table
  * @namespace helpers
  * @type Utility
  * @note "Renders WP_List_Table instances with standard markup."
  */
 class RenderTable {
+
 	/**
 	 * Render a WP_List_Table instance with standard form markup.
 	 *

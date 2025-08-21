@@ -1,3 +1,11 @@
+<?php
+/**
+ * Summary of Keygen Licensing Details Modal
+ */
+
+defined( 'ABSPATH' ) || exit();
+?>
+
 <div class="modal fade" id="keygenDetailsModal" tabindex="-1" aria-labelledby="keygenDetailsModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-scrollable">

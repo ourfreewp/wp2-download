@@ -1,5 +1,11 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/packages/plugins.php
+
+/**
+ * Plugins table view.
+ *
+ * @var string $table_html HTML for the plugins table.
+ */
+
 defined( 'ABSPATH' ) || exit();
 
 // Table HTML should be passed in from the controller.

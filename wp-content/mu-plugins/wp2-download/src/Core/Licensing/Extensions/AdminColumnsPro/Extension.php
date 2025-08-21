@@ -1,13 +1,21 @@
 <?php
+
+/**
+ * Summary of namespace WP2\Download\Core\Licensing\Extensions\AdminColumnsPro
+ */
+
 namespace WP2\Download\Core\Licensing\Extensions\AdminColumnsPro;
 
 /**
+ * Admin Columns Pro licensing extension.
+ *
  * @component_id licensing_admincolumnspro_extension
  * @namespace licensing.extensions.admincolumnspro
  * @type Extension
  * @note "Handles Admin Columns Pro vendor activation."
  */
 class Extension {
+
 	/**
 	 * Hooked into wp2_run_vendor_activation.
 	 *
@@ -20,11 +28,3 @@ class Extension {
 		return false;
 	}
 }
-
-// Register the handler with the pipeline.
-add_filter(
-	'wp2_run_vendor_activation',
-	array( new Extension(), 'activate_license' ),
-	10,
-	2
-);

@@ -1,5 +1,8 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/origins/composer.php
+/**
+ * Settings for the Composer origin.
+ */
+
 defined( 'ABSPATH' ) || exit();
 ?>
 

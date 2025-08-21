@@ -1,3 +1,13 @@
+<?php
+/**
+ * GitHub details modal admin view.
+ *
+ * @package WP2_Download
+ */
+
+defined( 'ABSPATH' ) || exit();
+?>
+
 <div class="modal fade" id="githubDetailsModal" tabindex="-1" aria-labelledby="githubDetailsModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-scrollable">

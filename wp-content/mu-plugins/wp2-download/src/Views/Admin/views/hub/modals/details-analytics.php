@@ -1,4 +1,12 @@
-<!-- Analytics Details Modal -->
+<?php
+/**
+ * PostHog Analytics Details Modal.
+ *
+ * @package WP2_Download
+ */
+
+defined( 'ABSPATH' ) || exit();
+?>
 <div class="modal fade" id="posthogDetailsModal" tabindex="-1" aria-labelledby="posthogDetailsModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-scrollable">

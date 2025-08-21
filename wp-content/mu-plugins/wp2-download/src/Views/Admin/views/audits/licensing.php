@@ -1,5 +1,10 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/audits/licensing.php
+/**
+ * Licensing Audit View
+ *
+ * @file licensing.php
+ */
+
 defined( 'ABSPATH' ) || exit();
 ?>
 

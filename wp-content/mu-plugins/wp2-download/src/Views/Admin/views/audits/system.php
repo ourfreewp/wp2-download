@@ -1,3 +1,7 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/audits/system.php
+
+/**
+ * Settings for system-level configurations in WP2 Download.
+ */
+
 defined( 'ABSPATH' ) || exit();

@@ -1,7 +1,16 @@
 <?php
+
+/**
+ * Summary of namespace WP2\Download\Core\Packages
+ */
+
 namespace WP2\Download\Core\Packages;
 
+/**
+ * Summary of Rewrite
+ */
 class Rewrite {
+
 	public static function add_rewrite_rules() {
 		add_rewrite_rule(
 			'^wp2-download/([^/]+)/([^/]+)/([^/]+)/?$',

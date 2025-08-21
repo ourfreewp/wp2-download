@@ -1,3 +1,13 @@
+<?php
+/**
+ * R2 Storage Details Modal.
+ *
+ * @package WP2_Download
+ */
+
+defined( 'ABSPATH' ) || exit();
+?>
+
 <div class="modal fade" id="r2DetailsModal" tabindex="-1" aria-labelledby="r2DetailsModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-scrollable">
 		<div class="modal-content">

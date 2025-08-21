@@ -1,5 +1,8 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/origins/github.php
+/**
+ * GitHub settings view.
+ */
+
 defined( 'ABSPATH' ) || exit();
 ?>
 

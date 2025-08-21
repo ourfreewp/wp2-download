@@ -101,7 +101,7 @@ Here is a simple example of how to register a component, in this case a REST API
 <?php
 // my-plugin/includes/REST/Controller.php
 
-use WP2\Download\Archi\Helpers;
+use WP2\Download\Modules\Archi\Helpers;
 
 // Define your component data.
 $rest_controller = [

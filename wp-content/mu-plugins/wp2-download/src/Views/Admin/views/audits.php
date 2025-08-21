@@ -21,15 +21,15 @@ defined( 'ABSPATH' ) || exit();
 
 	<?php if ( ! empty( $tabs ) ) : ?>
 		<h2 class="nav-tab-wrapper" role="tablist">
-			<?php foreach ( $tabs as $tab_key => $tab ) : ?>
+			<?php foreach ( $tabs as $tab_key => $tab_data ) : ?>
 				<?php
-				$active   = $current_tab === $tab_key ? ' nav-tab-active' : '';
+				$active = $current_tab === $tab_key ? ' nav-tab-active' : '';
 				$tab_href = $build_tab_url( $tab_key );
 				?>
 				<a class="nav-tab<?php echo esc_attr( $active ); ?>" id="<?php echo esc_attr( 'tab-' . $tab_key ); ?>"
-					href="<?php echo $tab_href; ?>" role="tab"
+					href="<?php echo esc_url( $tab_href ); ?>" role="tab"
 					aria-selected="<?php echo esc_attr( $current_tab === $tab_key ? 'true' : 'false' ); ?>">
-					<?php echo esc_html( $tab['label'] ); ?>
+					<?php echo esc_html( $tab_data['label'] ); ?>
 				</a>
 			<?php endforeach; ?>
 		</h2>

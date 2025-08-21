@@ -1,8 +1,16 @@
 <?php
+
+/**
+ * Archi Caching module.
+ *
+ * @package WP2_Download
+ */
+
 namespace WP2\Download\Modules\Archi;
 
-defined( 'ABSPATH' ) || exit;
 /**
+ * Archi Caching
+ *
  * @component_id caching
  * @namespace archi
  * @type Service
@@ -13,21 +21,24 @@ defined( 'ABSPATH' ) || exit;
  * @relation {"to": "registry", "type": "dependency", "label": "rebuilds registry cache"}
  * @relation {"to": "helpers", "type": "dependency", "label": "uses annotation helpers"}
  */
-final class Caching {
+final class Caching
+{
+    public const TRANSIENT_KEY = 'wp2_archi_graph_cache';
 
-	public const TRANSIENT_KEY = 'wp2_archi_graph_cache';
+    public function boot(): void
+    {
+        add_action('activated_plugin', [$this, 'flush_cache']);
+        add_action('deactivated_plugin', [$this, 'flush_cache']);
+    }
 
-	public function boot(): void {
-		add_action( 'activated_plugin', array( $this, 'flush_cache' ) );
-		add_action( 'deactivated_plugin', array( $this, 'flush_cache' ) );
-	}
+    public function flush_cache(): void
+    {
+        delete_transient(self::TRANSIENT_KEY);
+    }
 
-	public function flush_cache(): void {
-		delete_transient( self::TRANSIENT_KEY );
-	}
-
-	public function rebuild_cache(): void {
-		$this->flush_cache();
-		Registry::instance()->load_components( true );
-	}
+    public function rebuild_cache(): void
+    {
+        $this->flush_cache();
+        Registry::instance()->load_components(true);
+    }
 }

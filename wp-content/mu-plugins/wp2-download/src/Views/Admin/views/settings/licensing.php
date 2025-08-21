@@ -1,5 +1,10 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/settings/licensing.php
+/**
+ * Licensing settings view.
+ *
+ * @package WP2 Download
+ */
+
 defined( 'ABSPATH' ) || exit();
 use WP2\Download\Services\Locator;
 
