@@ -1,9 +1,11 @@
 # Copilot Instructions for wp2-download
 
 ## Project Overview
+
 WP2 Download is a manifest-driven package hub for WordPress, enabling secure, scalable distribution of plugins, themes, and must-use packages. It integrates with native WordPress update flows and supports automated releases, health checks, analytics, licensing, and REST APIs.
 
 ## Architecture & Key Patterns
+
 - **Service Locator Pattern:**
   - Centralized in `src/Services/Locator.php`.
   - Resolves adapters for analytics, licensing, storage, development, and origin sources.
@@ -23,6 +25,7 @@ WP2 Download is a manifest-driven package hub for WordPress, enabling secure, sc
   - Views in `src/Views/Admin/`.
 
 ## Developer Workflows
+
 - **Build/Autoload:**
   - Use Composer for autoloading: `composer dump-autoload`.
 - **Testing:**
@@ -35,6 +38,7 @@ WP2 Download is a manifest-driven package hub for WordPress, enabling secure, sc
   - GitHub Actions for releases and health checks.
 
 ## Conventions & Integration Points
+
 - **Adapters:**
   - Place new adapters in the appropriate `src/Extensions/{Service}/Adapters/` directory.
   - Implement `ConnectionInterface` for service compatibility.
@@ -46,6 +50,7 @@ WP2 Download is a manifest-driven package hub for WordPress, enabling secure, sc
   - Ingest token required for release API.
 
 ## References
+
 - [README.md](../../README.md)
 - [docs/architecture.md](../../docs/architecture.md)
 - [docs/api-reference.md](../../docs/api-reference.md)
@@ -53,13 +58,16 @@ WP2 Download is a manifest-driven package hub for WordPress, enabling secure, sc
 - [docs/health-checks.md](../../docs/health-checks.md)
 
 ---
+
 **Feedback:** If any section is unclear or missing, please specify so it can be improved for future AI agents.
 
 ## PHP Tags
+
 Always use the full PHP opening tag `<?php` and closing tag `?>`.  
 Avoid short tags (`<?`), as they are often disabled and can break code.
 
 ## Code Alignment
+
 When declaring multiple variables in a row, align the equals signs for readability.
 
 ```php
@@ -73,6 +81,7 @@ $long_variable_name = 'another value';
 ```
 
 ## Ternary Operators
+
 Avoid short ternary operators (`?:`).
 Always use the full ternary form:
 
@@ -81,6 +90,7 @@ $foo = $condition ? 'yes' : 'no';
 ```
 
 ## Yoda Conditions
+
 Write conditions with the literal value on the left.
 This prevents accidental assignments.
 
@@ -93,6 +103,7 @@ if ( true == $variable ) {}
 ```
 
 ## Inline Comments
+
 End inline comments with a period, exclamation mark, or question mark.
 
 ```php
@@ -101,14 +112,16 @@ End inline comments with a period, exclamation mark, or question mark.
 ```
 
 ## File Endings
+
 Every file must end with a blank newline.
 
 ## Escaping Output
+
 Do not use `htmlspecialchars`.
 Use WordPress-specific escaping functions:
-  • `esc_html()` for HTML
-  • `esc_attr()` for attributes
-  • `esc_url()` for URLs
+• `esc_html()` for HTML
+• `esc_attr()` for attributes
+• `esc_url()` for URLs
 
 ```php
 // Incorrect
@@ -119,5 +132,86 @@ echo esc_html( $variable );
 ```
 
 ## WordPress Functions
+
 Prefer WordPress-specific helpers over PHP natives.
 For example, use `wp_json_encode()` instead of `json_encode()`.
+
+# Amendment: ABSPATH Guards & PSR-1 Side Effects
+
+## Rules
+
+- **Symbols-only files (`src/…`)**: _Do not_ include ABSPATH guards.
+- **Bootstrap/init/templates**: Include ABSPATH guard and allow side effects (hooks, execution).
+- **If mixing is unavoidable**: Add a one-line PHPCS ignore on the guard only.
+- **Placement**: Namespace first, then `defined( 'ABSPATH' ) || exit;`.
+- **Alt templates**: Use PHP’s alternative control-structure syntax in templates.
+
+## Patterns
+
+### 1 Symbols-only (classes, functions, constants)
+
+```php
+<?php
+namespace WP2\Feature\Service;
+
+final class Loader {
+	public function init(): void {}
+}
+```
+
+Bootstrap / init with side effects
+
+```php
+<?php
+namespace WP2\Feature;
+
+defined( 'ABSPATH' ) || exit;
+
+add_action( 'init', static function (): void {
+	// Register hooks, kick off services, etc.
+} );
+
+```
+
+Mixed (temporary) with PHPCS exception
+
+```php
+<?php
+namespace WP2\Feature;
+
+// phpcs:ignore PSR1.Files.SideEffects.FoundWithSymbols
+defined( 'ABSPATH' ) || exit;
+
+final class Controller {
+	public function register(): void {}
+}
+```
+
+PHPCS Configuration Options
+
+Exclude side-effects sniff for symbols-only path
+
+```xml
+<?xml version="1.0"?>
+<ruleset name="WP2 Coding Standards">
+	<rule ref="WordPress" />
+	<file>wp-content/mu-plugins/wp2-download/src</file>
+
+	<rule ref="PSR1.Files.SideEffects">
+		<exclude-pattern>wp-content/mu-plugins/wp2-download/src/*</exclude-pattern>
+	</rule>
+</ruleset>
+```
+
+Keep the sniff globally; allow narrow per-line ignores (preferred)
+
+```php
+// phpcs:ignore PSR1.Files.SideEffects.FoundWithSymbols
+defined( 'ABSPATH' ) || exit;
+```
+
+Checklist
+• Symbols in src/… only; no side effects.
+• Guards only in bootstrap/init/templates.
+• Namespace → ABSPATH guard (when present) → code.
+• Use precise, one-line PHPCS ignores when necessary.

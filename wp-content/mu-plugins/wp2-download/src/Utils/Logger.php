@@ -1,7 +1,14 @@
 <?php
+
+/**
+ * Summary of namespace WP2\Download\Utils
+ */
+
 namespace WP2\Download\Utils;
 
 /**
+ * Logger Utility
+ *
  * @component_id util_logger
  * @namespace util
  * @type Utility

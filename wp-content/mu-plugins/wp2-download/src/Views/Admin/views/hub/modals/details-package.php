@@ -1,4 +1,10 @@
-<!-- Package Details Modal -->
+<?php
+/**
+ * Package Details
+ **/
+
+defined( 'ABSPATH' ) || exit();
+?>
 <div class="modal fade" id="packageDetailsModal" tabindex="-1" aria-labelledby="packageDetailsModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog modal-xl modal-dialog-scrollable">

@@ -1,5 +1,8 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/origins/gdrive.php
+/**
+ * Settings for the Google Drive origin.
+ */
+
 defined( 'ABSPATH' ) || exit();
 ?>
 

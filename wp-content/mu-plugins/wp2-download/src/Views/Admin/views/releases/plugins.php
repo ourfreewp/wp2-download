@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Plugin Release Table
+ **/
+
 defined( 'ABSPATH' ) || exit();
 
 // Table HTML should be passed in from the controller.

@@ -4,6 +4,7 @@
  *
  * @package WP2Download
  */
+
 ?>
 <div class="wp2-hub-catalog">
 	<div class="d-flex justify-content-between align-items-center">
@@ -33,11 +34,11 @@
 				<?php else : ?>
 					<?php foreach ( $packages as $package ) : ?>
 						<?php
-						$repo    = \WP2\Download\API\Packages\Controller::get_repo_data( $package );
+						$repo = \WP2\Download\API\Packages\Controller::get_repo_data( $package );
 						$storage = \WP2\Download\API\Packages\Controller::get_storage_data( $package );
 						$storage = \WP2\Download\API\Packages\Controller::get_licensing_data( $package );
 						$storage = \WP2\Download\API\Packages\Controller::get_analytics_data( $package );
-						$health  = \WP2\Download\API\Packages\Controller::get_health_data( $package );
+						$health = \WP2\Download\API\Packages\Controller::get_health_data( $package );
 						?>
 						<tr>
 							<td class="wp2-hub-td-name">

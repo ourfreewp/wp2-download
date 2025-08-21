@@ -1,6 +1,12 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/settings/analytics.php
+/**
+ * Analytics settings view.
+ *
+ * @package WP2 Download
+ */
+
 defined( 'ABSPATH' ) || exit();
+
 use WP2\Download\Services\Locator;
 
 $analytics_adapters = Locator::list_analytics_adapters();

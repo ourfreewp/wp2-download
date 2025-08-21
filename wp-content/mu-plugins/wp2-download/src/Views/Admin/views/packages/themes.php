@@ -1,5 +1,11 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/packages/themes.php
+
+/**
+ * Themes table view.
+ *
+ * @var string $table_html HTML for the themes table.
+ */
+
 defined( 'ABSPATH' ) || exit();
 
 // Table HTML should be passed in from the controller.

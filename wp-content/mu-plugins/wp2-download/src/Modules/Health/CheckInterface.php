@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Interface for health check implementations in WP2 Download.
  *
@@ -15,6 +16,7 @@
 namespace WP2\Download\Modules\Health;
 
 interface CheckInterface {
+
 	/**
 	 * Returns the unique ID for this health check.
 	 *
@@ -29,5 +31,5 @@ interface CheckInterface {
 	 * @param bool     $force        Whether to force the check.
 	 * @return array|null Health check result data or null.
 	 */
-	public function run( \WP_Post $package_post, bool $force = false );
+	public function run( \WP_Post $package_post, bool $force = false);
 }

@@ -1,15 +1,21 @@
 <?php
-namespace WP2\Download\Core\Development;
-
-defined( 'ABSPATH' ) || exit();
 
 /**
+ * Summary of namespace WP2\Download\Core\Development
+ */
+
+namespace WP2\Download\Core\Development;
+
+/**
+ * Development connection interface.
+ *
  * @component_id development_connection_interface
  * @namespace development
  * @type Interface
  * @note "Interface for development service adapters."
  */
 interface ConnectionInterface {
+
 	/**
 	 * Connect to the development service.
 	 *

@@ -1,7 +1,10 @@
 <?php
 /**
+ * Hub View
+ *
  * @var array $packages An array of package data passed from the Hub class.
  */
+
 ?>
 <div class="wrap">
 	<h1>WP2 Downloads</h1>

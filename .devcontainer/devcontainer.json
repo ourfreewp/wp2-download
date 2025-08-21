@@ -1,0 +1,68 @@
+{
+    "name": "WordPress PHP Development",
+    "dockerFile": "Dockerfile",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "devsense.phptools-vscode",
+                "ms-vscode.live-server",
+                "felixfbecker.php-debug"
+            ],
+            "settings": {
+                // --- Devsense PHP Tools Settings ---
+
+                // Sets the PHP version for static analysis and IntelliSense
+                "php.language.version": "8.2",
+                
+                // Exclude these patterns from the Problems panel
+                "php.problems.exclude": {
+                    "**/vendor/**": true,
+                    "**/node_modules/**": true,
+                    "**/wp-content/uploads/**": true,
+                    "**/wp-content/cache/**": true,
+                    "**/*.min.php": true,
+                    "**/templates/**": true,
+                    "**/*.blade.php": true
+                },
+
+                // --- PHP_CodeSniffer Integration via Devsense ---
+                
+                // Enable the PHP_CodeSniffer linter
+                "phptools.phpcs.enabled": true,
+                
+                // Path to the PHP_CodeSniffer executable within the container
+                "phptools.phpcs.executablePath": "${containerWorkspaceFolder}/vendor/bin/phpcs",
+                
+                // Arguments to pass to PHP_CodeSniffer, referencing your ruleset.xml
+                "phptools.phpcs.options": [
+                    "--standard=${containerWorkspaceFolder}/ruleset.xml"
+                ],
+
+                // Exclude patterns for the PHP_CodeSniffer linter within Devsense
+                "phptools.phpcs.excludePatterns": [
+                    "**/vendor/**",
+                    "**/node_modules/**",
+                    "**/*.min.php",
+                    "**/templates/**",
+                    "**/*.blade.php"
+                ],
+                
+                // --- Code Formatting and Style ---
+                
+                // Set a base code style for the Devsense formatter
+                "php.format.codeStyle": "WordPress",
+                
+                // Override specific formatting rules to align with your ruleset
+                "php.format.rules": {
+                    // This aligns with `Generic.Arrays.DisallowLongArraySyntax`
+                    "array_syntax": "short",
+                    // This aligns with `Generic.ControlStructures.DisallowYodaConditions`
+                    "yoda_conditions": false,
+                    // This can align with `WordPress.Arrays.MultipleStatementAlignment`
+                    "alignment.multiline_arrays": "off"
+                }
+            }
+        }
+    },
+    "postCreateCommand": "composer install"
+}

@@ -1,16 +1,21 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Storage/ConnectionInterface.php
-namespace WP2\Download\Core\Storage;
-
-defined( 'ABSPATH' ) || exit();
 
 /**
+ * Summary of namespace WP2\Download\Core\Storage
+ */
+
+namespace WP2\Download\Core\Storage;
+
+/**
+ * Interface for storage connection adapters.
+ *
  * @component_id storage_connection_interface
  * @namespace storage
  * @type Interface
  * @note "Interface for storage connection adapters."
  */
 interface ConnectionInterface {
+
 	/**
 	 * Connect to the storage service.
 	 *

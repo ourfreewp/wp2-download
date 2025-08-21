@@ -1,5 +1,8 @@
 <?php
-// wp-content/mu-plugins/wp2-download/src/Admin/views/origins/wporg.php
+/**
+ * Settings for the WordPress.org directory origin.
+ */
+
 defined( 'ABSPATH' ) || exit();
 ?>
 

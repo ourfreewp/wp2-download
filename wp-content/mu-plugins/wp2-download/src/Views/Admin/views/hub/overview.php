@@ -1,3 +1,13 @@
+<?php
+/**
+ * Hub Overview admin view.
+ *
+ * @package WP2_Download
+ */
+
+defined( 'ABSPATH' ) || exit();
+?>
+
 <div class="wp2-hub-overview d-flex flex-wrap gap-4 mb-4">
 	<div class="card flex-grow-1">
 		<div class="card-body d-flex flex-column justify-content-between">
